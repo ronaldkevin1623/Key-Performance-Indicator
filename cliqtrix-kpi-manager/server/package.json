@@ -1,0 +1,62 @@
+{
+  "name": "cliqtrix-kpi-manager-server",
+  "version": "1.0.0",
+  "description": "Cliqtrix KPI Manager - Backend API Server",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "nodemon",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch"
+  },
+  "keywords": [
+    "kpi",
+    "performance-management",
+    "zoho-cliq"
+  ],
+  "author": "Cliqtrix Team",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.13.2",
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.8.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.1",
+    "express-validator": "^7.3.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.20.0",
+    "morgan": "^1.10.1",
+    "winston": "^3.18.3"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/compression": "^1.8.1",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.5",
+    "@types/jest": "^29.5.13",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^22.19.1",
+    "@types/supertest": "^6.0.2",
+    "@typescript-eslint/eslint-plugin": "^8.47.0",
+    "@typescript-eslint/parser": "^8.47.0",
+    "eslint": "^9.39.1",
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.11",
+    "prettier": "^3.6.2",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "type": "commonjs"
+}
