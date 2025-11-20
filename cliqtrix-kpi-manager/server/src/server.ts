@@ -13,6 +13,8 @@ import logger from './utils/logger';
 // Import routes
 import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
+import projectRoutes from './routes/project.routes';
+import taskRoutes from './routes/task.routes';
 
 // Load environment variables
 const result = dotenv.config({ path: '.env.development' });
@@ -65,11 +67,11 @@ if (process.env.NODE_ENV === 'development') {
 // API ROUTES
 // ============================================
 
-// Mount authentication routes
+// Mount routes
 app.use('/api/auth', authRoutes);
-
-// Mount user management routes
 app.use('/api/users', userRoutes);
+app.use('/api/projects', projectRoutes);
+app.use('/api/tasks', taskRoutes);
 
 // ============================================
 // TEST ROUTES
@@ -108,6 +110,24 @@ app.get('/', (_req: Request, res: Response) => {
         update: 'PATCH /api/users/:id',
         deactivate: 'DELETE /api/users/:id',
       },
+      projects: {
+        create: 'POST /api/projects',
+        list: 'GET /api/projects',
+        get: 'GET /api/projects/:id',
+        update: 'PATCH /api/projects/:id',
+        delete: 'DELETE /api/projects/:id',
+        addMember: 'POST /api/projects/:id/members',
+        removeMember: 'DELETE /api/projects/:id/members/:userId',
+      },
+      tasks: {
+        create: 'POST /api/tasks',
+        list: 'GET /api/tasks',
+        get: 'GET /api/tasks/:id',
+        update: 'PATCH /api/tasks/:id',
+        delete: 'DELETE /api/tasks/:id',
+        addComment: 'POST /api/tasks/:id/comments',
+        getKPI: 'GET /api/tasks/kpi/:userId',
+      },
     },
   });
 });
@@ -120,6 +140,8 @@ app.get('/api', (_req: Request, res: Response) => {
     availableRoutes: {
       authentication: '/api/auth',
       users: '/api/users',
+      projects: '/api/projects',
+      tasks: '/api/tasks',
     },
   });
 });
@@ -163,26 +185,47 @@ const startServer = async () => {
 
     // Start server
     app.listen(PORT, () => {
-      logger.info('='.repeat(50));
+      logger.info('='.repeat(60));
       logger.info('🚀 Cliqtrix KPI Manager Server Started');
-      logger.info('='.repeat(50));
+      logger.info('='.repeat(60));
       logger.info(`📍 Server: http://${HOST}:${PORT}`);
       logger.info(`🌍 Environment: ${process.env.NODE_ENV}`);
       logger.info(`📊 Database: ${getDatabaseStatus()}`);
-      logger.info('='.repeat(50));
+      logger.info('='.repeat(60));
       logger.info('📌 Available Routes:');
+      logger.info('');
       logger.info('   AUTH:');
-      logger.info('     POST   /api/auth/signup   - Company registration');
-      logger.info('     POST   /api/auth/login    - User login');
-      logger.info('     GET    /api/auth/me       - Get current user');
-      logger.info('     POST   /api/auth/logout   - User logout');
+      logger.info('     POST   /api/auth/signup     - Company registration');
+      logger.info('     POST   /api/auth/login      - User login');
+      logger.info('     GET    /api/auth/me         - Get current user');
+      logger.info('     POST   /api/auth/logout     - User logout');
+      logger.info('');
       logger.info('   USERS (Admin only):');
-      logger.info('     POST   /api/users         - Create employee');
-      logger.info('     GET    /api/users         - List employees');
-      logger.info('     GET    /api/users/:id     - Get employee');
-      logger.info('     PATCH  /api/users/:id     - Update employee');
-      logger.info('     DELETE /api/users/:id     - Deactivate employee');
-      logger.info('='.repeat(50));
+      logger.info('     POST   /api/users           - Create employee');
+      logger.info('     GET    /api/users           - List employees');
+      logger.info('     GET    /api/users/:id       - Get employee');
+      logger.info('     PATCH  /api/users/:id       - Update employee');
+      logger.info('     DELETE /api/users/:id       - Deactivate employee');
+      logger.info('');
+      logger.info('   PROJECTS (Admin only):');
+      logger.info('     POST   /api/projects        - Create project');
+      logger.info('     GET    /api/projects        - List projects');
+      logger.info('     GET    /api/projects/:id    - Get project');
+      logger.info('     PATCH  /api/projects/:id    - Update project');
+      logger.info('     DELETE /api/projects/:id    - Delete project');
+      logger.info('     POST   /api/projects/:id/members      - Add team member');
+      logger.info('     DELETE /api/projects/:id/members/:userId - Remove member');
+      logger.info('');
+      logger.info('   TASKS (Admin & Employee):');
+      logger.info('     POST   /api/tasks           - Create task (admin)');
+      logger.info('     GET    /api/tasks           - List tasks');
+      logger.info('     GET    /api/tasks/:id       - Get task');
+      logger.info('     PATCH  /api/tasks/:id       - Update task');
+      logger.info('     DELETE /api/tasks/:id       - Delete task (admin)');
+      logger.info('     POST   /api/tasks/:id/comments  - Add comment');
+      logger.info('     GET    /api/tasks/kpi/:userId   - Get KPI scores');
+      logger.info('');
+      logger.info('='.repeat(60));
     });
 
   } catch (error: any) {
