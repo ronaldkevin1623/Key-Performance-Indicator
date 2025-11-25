@@ -1,4 +1,3 @@
-
 import express, { Application, Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
@@ -8,6 +7,7 @@ import compression from 'compression';
 
 // Import configurations
 import { connectDatabase, setupDatabaseEventHandlers, getDatabaseStatus } from './config/database.config';
+import corsOptions from './config/cors.config'; // ✅ Use custom CORS config!
 import logger from './utils/logger';
 
 // Import routes
@@ -15,6 +15,7 @@ import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
 import projectRoutes from './routes/project.routes';
 import taskRoutes from './routes/task.routes';
+import dashboardRoutes from './routes/dashboard.routes';
 
 // Load environment variables
 const result = dotenv.config({ path: '.env.development' });
@@ -43,12 +44,7 @@ const HOST = process.env.HOST || 'localhost';
 // Security middleware
 app.use(helmet());
 
-// CORS configuration
-const corsOptions = {
-  origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
-  credentials: true,
-  optionsSuccessStatus: 200,
-};
+// Use custom CORS configuration
 app.use(cors(corsOptions));
 
 // Body parsing middleware
@@ -67,12 +63,11 @@ if (process.env.NODE_ENV === 'development') {
 // API ROUTES
 // ============================================
 
-// Mount routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/tasks', taskRoutes);
-
+app.use('/api/dashboard', dashboardRoutes); // REGISTER DASHBOARD ROUTE
 // ============================================
 // TEST ROUTES
 // ============================================
@@ -192,50 +187,13 @@ const startServer = async () => {
       logger.info(`🌍 Environment: ${process.env.NODE_ENV}`);
       logger.info(`📊 Database: ${getDatabaseStatus()}`);
       logger.info('='.repeat(60));
-      logger.info('📌 Available Routes:');
-      logger.info('');
-      logger.info('   AUTH:');
-      logger.info('     POST   /api/auth/signup     - Company registration');
-      logger.info('     POST   /api/auth/login      - User login');
-      logger.info('     GET    /api/auth/me         - Get current user');
-      logger.info('     POST   /api/auth/logout     - User logout');
-      logger.info('');
-      logger.info('   USERS (Admin only):');
-      logger.info('     POST   /api/users           - Create employee');
-      logger.info('     GET    /api/users           - List employees');
-      logger.info('     GET    /api/users/:id       - Get employee');
-      logger.info('     PATCH  /api/users/:id       - Update employee');
-      logger.info('     DELETE /api/users/:id       - Deactivate employee');
-      logger.info('');
-      logger.info('   PROJECTS (Admin only):');
-      logger.info('     POST   /api/projects        - Create project');
-      logger.info('     GET    /api/projects        - List projects');
-      logger.info('     GET    /api/projects/:id    - Get project');
-      logger.info('     PATCH  /api/projects/:id    - Update project');
-      logger.info('     DELETE /api/projects/:id    - Delete project');
-      logger.info('     POST   /api/projects/:id/members      - Add team member');
-      logger.info('     DELETE /api/projects/:id/members/:userId - Remove member');
-      logger.info('');
-      logger.info('   TASKS (Admin & Employee):');
-      logger.info('     POST   /api/tasks           - Create task (admin)');
-      logger.info('     GET    /api/tasks           - List tasks');
-      logger.info('     GET    /api/tasks/:id       - Get task');
-      logger.info('     PATCH  /api/tasks/:id       - Update task');
-      logger.info('     DELETE /api/tasks/:id       - Delete task (admin)');
-      logger.info('     POST   /api/tasks/:id/comments  - Add comment');
-      logger.info('     GET    /api/tasks/kpi/:userId   - Get KPI scores');
-      logger.info('');
-      logger.info('='.repeat(60));
     });
-
   } catch (error: any) {
     logger.error('Failed to start server:', error.message);
     process.exit(1);
   }
 };
 
-// Start the server
 startServer();
 
-// Export app for testing
 export default app;

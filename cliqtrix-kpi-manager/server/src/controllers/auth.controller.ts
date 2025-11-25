@@ -1,20 +1,13 @@
-
 import { Request, Response } from 'express';
 import { User, Company } from '../models';
 import { generateTokenPair } from '../config/jwt.config';
 import logger from '../utils/logger';
 
-/**
- * Company Signup (Creates company + first admin user)
- * POST /api/auth/signup
- */
 export const signup = async (req: Request, res: Response): Promise<void> => {
   try {
     const {
-      // Company details
       companyName,
       companyEmail,
-      // Admin user details
       firstName,
       lastName,
       email,
@@ -22,7 +15,6 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
       phone,
     } = req.body;
 
-    // Validate required fields
     if (!companyName || !companyEmail || !firstName || !lastName || !email || !password) {
       res.status(400).json({
         status: 'error',
@@ -31,7 +23,6 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // Check if company email already exists
     const existingCompany = await Company.findOne({ email: companyEmail });
     if (existingCompany) {
       res.status(400).json({
@@ -41,7 +32,6 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // Check if user email already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       res.status(400).json({
@@ -67,7 +57,7 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
     // Create admin user
     const user = await User.create({
       email,
-      password, // Will be hashed automatically by pre-save hook
+      password,
       firstName,
       lastName,
       role: 'admin',
@@ -76,7 +66,7 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
       isActive: true,
     });
 
-    // Generate tokens
+    // Generate tokens -- use only ObjectId string for companyId
     const { accessToken, refreshToken } = generateTokenPair({
       userId: user._id.toString(),
       email: user.email,
@@ -86,7 +76,6 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
 
     logger.info(`New company registered: ${companyName} (${companyEmail})`);
     logger.info(`Admin user created: ${email}`);
-
     res.status(201).json({
       status: 'success',
       message: 'Company and admin account created successfully!',
@@ -119,15 +108,10 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-/**
- * User Login (Admin or Employee)
- * POST /api/auth/login
- */
 export const login = async (req: Request, res: Response): Promise<void> => {
   try {
     const { email, password } = req.body;
 
-    // Validate input
     if (!email || !password) {
       res.status(400).json({
         status: 'error',
@@ -136,8 +120,9 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // Find user and include password field
-    const user = await User.findOne({ email }).select('+password').populate('company', 'name email');
+    const user = await User.findOne({ email })
+      .select('+password')
+      .populate('company', '_id name email');
 
     if (!user) {
       res.status(401).json({
@@ -147,7 +132,6 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // Check if user is active
     if (!user.isActive) {
       res.status(401).json({
         status: 'error',
@@ -156,9 +140,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // Check password
     const isPasswordValid = await user.comparePassword(password);
-
     if (!isPasswordValid) {
       res.status(401).json({
         status: 'error',
@@ -167,20 +149,24 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // Update last login
     user.lastLogin = new Date();
     await user.save();
 
-    // Generate tokens
+    let companyId: string = "";
+    if (user.company && typeof user.company === 'object' && '_id' in user.company) {
+      companyId = (user.company as { _id: any })._id.toString();
+    } else if (typeof user.company === "string") {
+      companyId = user.company;
+    }
+
     const { accessToken, refreshToken } = generateTokenPair({
       userId: user._id.toString(),
       email: user.email,
       role: user.role,
-      companyId: user.company.toString(),
+      companyId,
     });
 
     logger.info(`User logged in: ${email} (${user.role})`);
-
     res.status(200).json({
       status: 'success',
       message: 'Login successful!',
@@ -212,30 +198,19 @@ export const login = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-/**
- * Get Current User
- * GET /api/auth/me
- */
 export const getCurrentUser = async (req: Request, res: Response): Promise<void> => {
   try {
     if (!req.user) {
-      res.status(401).json({
-        status: 'error',
-        message: 'Not authenticated.',
-      });
+      res.status(401).json({ status: 'error', message: 'Not authenticated.' });
       return;
     }
 
-    // Get user with company details
     const user = await User.findById(req.user.userId)
       .populate('company', 'name email subscription')
       .select('-password');
 
     if (!user) {
-      res.status(404).json({
-        status: 'error',
-        message: 'User not found.',
-      });
+      res.status(404).json({ status: 'error', message: 'User not found.' });
       return;
     }
 
@@ -262,42 +237,16 @@ export const getCurrentUser = async (req: Request, res: Response): Promise<void>
     });
   } catch (error: any) {
     logger.error('Get current user error:', error);
-    res.status(500).json({
-      status: 'error',
-      message: 'Error fetching user data.',
-    });
+    res.status(500).json({ status: 'error', message: 'Error fetching user data.' });
   }
 };
 
-/**
- * Logout (Client-side token removal, optional server tracking)
- * POST /api/auth/logout
- */
 export const logout = async (req: Request, res: Response): Promise<void> => {
   try {
-    // In a production app, you might want to:
-    // 1. Blacklist the token
-    // 2. Clear refresh token from database
-    // 3. Track logout in audit log
-
     logger.info(`User logged out: ${req.user?.email}`);
-
-    res.status(200).json({
-      status: 'success',
-      message: 'Logged out successfully!',
-    });
+    res.status(200).json({ status: 'success', message: 'Logged out successfully!' });
   } catch (error: any) {
     logger.error('Logout error:', error);
-    res.status(500).json({
-      status: 'error',
-      message: 'Error during logout.',
-    });
+    res.status(500).json({ status: 'error', message: 'Error during logout.' });
   }
-};
-
-export default {
-  signup,
-  login,
-  getCurrentUser,
-  logout,
 };

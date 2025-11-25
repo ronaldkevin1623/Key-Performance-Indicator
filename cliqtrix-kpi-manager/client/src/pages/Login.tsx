@@ -16,9 +16,9 @@ const Login = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  // Use correct data extraction from backend
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     // Validate input
     const validation = loginSchema.safeParse({ email, password });
     if (!validation.success) {
@@ -31,24 +31,27 @@ const Login = () => {
     }
 
     setLoading(true);
-
     try {
-      const data: any = await authApi.login(email, password);
-      
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      
+      // API returns: { status, message, data: { user, tokens }}
+      const response: any = await authApi.login(email, password);
+      const { user, tokens } = response.data;
+
+      // Save token and user for auth/session
+      localStorage.setItem("token", tokens.accessToken);
+      localStorage.setItem("user", JSON.stringify(user));
+
       toast({
         title: "Login successful",
         description: "Welcome back!",
       });
 
-      if (data.user.role === "admin") {
+      // Redirect based on role
+      if (user.role === "admin") {
         navigate("/dashboard");
       } else {
         navigate("/dashboard/employee");
       }
-    } catch (error) {
+    } catch (error: any) {
       toast({
         title: "Login failed",
         description: error instanceof Error ? error.message : "Invalid credentials",
@@ -66,7 +69,6 @@ const Login = () => {
           <BarChart3 className="h-10 w-10 text-primary" />
           <span className="text-3xl font-bold text-foreground">Cliqtrix KPI</span>
         </div>
-
         <Card className="border-border/50 shadow-elegant">
           <CardHeader>
             <CardTitle className="text-2xl">Welcome back</CardTitle>
@@ -100,7 +102,6 @@ const Login = () => {
                 {loading ? "Signing in..." : "Sign in"}
               </Button>
             </form>
-
             <div className="mt-6 text-center text-sm">
               <span className="text-muted-foreground">Don't have an account? </span>
               <Link to="/auth/signup" className="text-primary hover:underline font-medium">
