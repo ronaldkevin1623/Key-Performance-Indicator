@@ -4,3 +4,7 @@
 2025-11-20 20:32:43 [[31merror[39m]: [31m❌ MongoDB connection error:[39m
 2025-11-20 20:35:08 [[31merror[39m]: [31m❌ MongoDB connection error:[39m
 2025-11-20 20:38:00 [[31merror[39m]: [31m❌ MongoDB connection error:[39m
+2025-11-26 20:40:42 [[31merror[39m]: [31m❌ MongoDB connection error:[39m
+2025-11-26 20:41:02 [[31merror[39m]: [31m❌ MongoDB connection error:[39m
+2025-11-26 21:29:56 [[31merror[39m]: [31mSignup error: E11000 duplicate key error collection: cliqtrix-kpi.companies index: name_1 dup key: { name: "Zoho" }[39m
+2025-11-26 21:30:14 [[31merror[39m]: [31mSignup error: E11000 duplicate key error collection: cliqtrix-kpi.companies index: name_1 dup key: { name: "Zoho" }[39m

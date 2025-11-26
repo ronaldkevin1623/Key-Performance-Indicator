@@ -116,6 +116,7 @@ export const tasksApi = {
     title: string;
     description: string;
     projectId: string;
+    assignedTo: string;
     priority: string;
     points: number;
     dueDate: string;
@@ -140,15 +141,16 @@ export const tasksApi = {
 // Users API
 export const usersApi = {
   getAll: () => apiRequest('/users'),
-  
+
+  // Added method for employee dropdown
+  getEmployeeDropdown: () => apiRequest('/users/employee-dropdown'),
+
   getById: (id: string) => apiRequest(`/users/${id}`),
-  
   update: (id: string, data: any) =>
     apiRequest(`/users/${id}`, {
       method: 'PUT',
       body: JSON.stringify(data),
     }),
-  
   delete: (id: string) =>
     apiRequest(`/users/${id}`, {
       method: 'DELETE',

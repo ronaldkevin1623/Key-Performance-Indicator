@@ -31,14 +31,16 @@ const Projects = () => {
       navigate("/auth/login");
       return;
     }
-
     fetchProjects(token);
   }, [navigate]);
 
   const fetchProjects = async (token: string) => {
     try {
-      const data = await projectsApi.getAll() as Project[];
-      setProjects(data);
+      const response = await projectsApi.getAll();
+      const projectArray = Array.isArray(response)
+        ? response
+        : response?.data?.projects || response?.projects || [];
+      setProjects(projectArray);
     } catch (error) {
       toast({
         title: "Error",
@@ -51,9 +53,11 @@ const Projects = () => {
     }
   };
 
-  const filteredProjects = projects.filter((project) =>
-    project.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredProjects = Array.isArray(projects)
+    ? projects.filter((project) =>
+        project.name.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : [];
 
   return (
     <div className="min-h-screen bg-background">

@@ -12,10 +12,12 @@ import { signupSchema } from "@/lib/validations";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
-    company: "",
+    company: "", // For employee: Company ID, for admin: Company Name
+    companyEmail: "", // For admin only
     role: "employee",
   });
   const [loading, setLoading] = useState(false);
@@ -24,23 +26,42 @@ const Signup = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validate input
-    const validation = signupSchema.safeParse(formData);
-    if (!validation.success) {
-      toast({
-        title: "Validation Error",
-        description: validation.error.errors[0].message,
-        variant: "destructive",
-      });
-      return;
-    }
+
+    // Validate input (optional: set up correct validations for both admin/employee)
+    // const validation = signupSchema.safeParse(formData);
+    // if (!validation.success) {
+    //   toast({ ... });
+    //   return;
+    // }
 
     setLoading(true);
 
     try {
-      await authApi.signup(formData);
-      
+      // Build correct payload
+      let payload: any = {};
+      if (formData.role === "admin") {
+        payload = {
+          companyName: formData.company,
+          companyEmail: formData.companyEmail,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          password: formData.password,
+          role: "admin",
+        };
+      } else {
+        payload = {
+          company: formData.company, // must be company ID!
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          password: formData.password,
+          role: "employee",
+        };
+      }
+
+      await authApi.signup(payload);
+
       toast({
         title: "Account created",
         description: "Please sign in to continue",
@@ -72,15 +93,27 @@ const Signup = () => {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
-                <Input
-                  id="name"
-                  placeholder="John Doe"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  required
-                />
+              <div className="flex gap-2">
+                <div className="space-y-2 flex-1">
+                  <Label htmlFor="firstName">First Name</Label>
+                  <Input
+                    id="firstName"
+                    placeholder="John"
+                    value={formData.firstName}
+                    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="space-y-2 flex-1">
+                  <Label htmlFor="lastName">Last Name</Label>
+                  <Input
+                    id="lastName"
+                    placeholder="Doe"
+                    value={formData.lastName}
+                    onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                    required
+                  />
+                </div>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
@@ -94,18 +127,11 @@ const Signup = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="company">Company</Label>
-                <Input
-                  id="company"
-                  placeholder="Acme Inc."
-                  value={formData.company}
-                  onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                  required
-                />
-              </div>
-              <div className="space-y-2">
                 <Label htmlFor="role">Role</Label>
-                <Select value={formData.role} onValueChange={(value) => setFormData({ ...formData, role: value })}>
+                <Select
+                  value={formData.role}
+                  onValueChange={(value) => setFormData({ ...formData, role: value })}
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -115,6 +141,42 @@ const Signup = () => {
                   </SelectContent>
                 </Select>
               </div>
+              {formData.role === "admin" ? (
+                <>
+                  <div className="space-y-2">
+                    <Label htmlFor="company">Company Name</Label>
+                    <Input
+                      id="company"
+                      placeholder="Acme Inc."
+                      value={formData.company}
+                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="companyEmail">Company Email</Label>
+                    <Input
+                      id="companyEmail"
+                      type="email"
+                      placeholder="company@acme.com"
+                      value={formData.companyEmail}
+                      onChange={(e) => setFormData({ ...formData, companyEmail: e.target.value })}
+                      required
+                    />
+                  </div>
+                </>
+              ) : (
+                <div className="space-y-2">
+                  <Label htmlFor="company">Company ID</Label>
+                  <Input
+                    id="company"
+                    placeholder="Paste your Company ID"
+                    value={formData.company}
+                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                    required
+                  />
+                </div>
+              )}
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
                 <Input

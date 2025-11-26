@@ -1,4 +1,3 @@
-
 import { Request, Response } from 'express';
 import { Task, Project, User } from '../models';
 import logger from '../utils/logger';
@@ -22,7 +21,6 @@ export const createTask = async (req: Request, res: Response): Promise<void> => 
       tags,
     } = req.body;
 
-    // Validate required fields
     if (!title || !project || !assignedTo) {
       res.status(400).json({
         status: 'error',
@@ -34,7 +32,6 @@ export const createTask = async (req: Request, res: Response): Promise<void> => 
     const companyId = req.user!.companyId;
     const assignedById = req.user!.userId;
 
-    // Verify project exists and belongs to company
     const projectDoc = await Project.findOne({
       _id: project,
       company: companyId,
@@ -49,7 +46,6 @@ export const createTask = async (req: Request, res: Response): Promise<void> => 
       return;
     }
 
-    // Verify assignedTo user exists and belongs to company
     const assignedToUser = await User.findOne({
       _id: assignedTo,
       company: companyId,
@@ -64,7 +60,6 @@ export const createTask = async (req: Request, res: Response): Promise<void> => 
       return;
     }
 
-    // Create task
     const task = await Task.create({
       title,
       description,
@@ -90,9 +85,7 @@ export const createTask = async (req: Request, res: Response): Promise<void> => 
     res.status(201).json({
       status: 'success',
       message: 'Task created successfully!',
-      data: {
-        task,
-      },
+      data: { task },
     });
   } catch (error: any) {
     logger.error('Create task error:', error);
@@ -113,18 +106,14 @@ export const getAllTasks = async (req: Request, res: Response): Promise<void> =>
     const userId = req.user!.userId;
     const userRole = req.user!.role;
 
-    // Query parameters
     const { status, priority, project, assignedTo } = req.query;
 
-    // Build query based on role
     const query: any = { company: companyId, isActive: true };
 
-    // If employee, only show their tasks
     if (userRole === 'employee') {
       query.assignedTo = userId;
     }
 
-    // Apply filters
     if (status) query.status = status;
     if (priority) query.priority = priority;
     if (project) query.project = project;
@@ -136,13 +125,7 @@ export const getAllTasks = async (req: Request, res: Response): Promise<void> =>
       .populate('assignedBy', 'firstName lastName email')
       .sort({ dueDate: 1, priority: -1 });
 
-    res.status(200).json({
-      status: 'success',
-      results: tasks.length,
-      data: {
-        tasks,
-      },
-    });
+    res.status(200).json(tasks);
   } catch (error: any) {
     logger.error('Get tasks error:', error);
     res.status(500).json({
@@ -163,12 +146,8 @@ export const getTask = async (req: Request, res: Response): Promise<void> => {
     const userId = req.user!.userId;
     const userRole = req.user!.role;
 
-    const query: any = {
-      _id: id,
-      company: companyId,
-    };
+    const query: any = { _id: id, company: companyId };
 
-    // If employee, only allow viewing their own tasks
     if (userRole === 'employee') {
       query.assignedTo = userId;
     }
@@ -180,25 +159,14 @@ export const getTask = async (req: Request, res: Response): Promise<void> => {
       .populate('comments.user', 'firstName lastName email avatar');
 
     if (!task) {
-      res.status(404).json({
-        status: 'error',
-        message: 'Task not found.',
-      });
+      res.status(404).json({ status: 'error', message: 'Task not found.' });
       return;
     }
 
-    res.status(200).json({
-      status: 'success',
-      data: {
-        task,
-      },
-    });
+    res.status(200).json({ status: 'success', data: { task } });
   } catch (error: any) {
     logger.error('Get task error:', error);
-    res.status(500).json({
-      status: 'error',
-      message: 'Error fetching task.',
-    });
+    res.status(500).json({ status: 'error', message: 'Error fetching task.' });
   }
 };
 
@@ -225,33 +193,21 @@ export const updateTask = async (req: Request, res: Response): Promise<void> => 
       tags,
     } = req.body;
 
-    const task = await Task.findOne({
-      _id: id,
-      company: companyId,
-    });
+    const task = await Task.findOne({ _id: id, company: companyId });
 
     if (!task) {
-      res.status(404).json({
-        status: 'error',
-        message: 'Task not found.',
-      });
+      res.status(404).json({ status: 'error', message: 'Task not found.' });
       return;
     }
 
-    // Employees can only update their own tasks and limited fields
     if (userRole === 'employee') {
       if (task.assignedTo.toString() !== userId) {
-        res.status(403).json({
-          status: 'error',
-          message: 'You can only update your own tasks.',
-        });
+        res.status(403).json({ status: 'error', message: 'You can only update your own tasks.' });
         return;
       }
-      // Employees can only update status and actual hours
       if (status) task.status = status;
       if (actualHours !== undefined) task.actualHours = actualHours;
     } else {
-      // Admin can update all fields
       if (title) task.title = title;
       if (description !== undefined) task.description = description;
       if (status) task.status = status;
@@ -270,19 +226,10 @@ export const updateTask = async (req: Request, res: Response): Promise<void> => 
 
     logger.info(`Task updated: ${task.title} by ${req.user!.email}`);
 
-    res.status(200).json({
-      status: 'success',
-      message: 'Task updated successfully!',
-      data: {
-        task,
-      },
-    });
+    res.status(200).json({ status: 'success', message: 'Task updated successfully!', data: { task } });
   } catch (error: any) {
     logger.error('Update task error:', error);
-    res.status(500).json({
-      status: 'error',
-      message: 'Error updating task.',
-    });
+    res.status(500).json({ status: 'error', message: 'Error updating task.' });
   }
 };
 
@@ -295,16 +242,10 @@ export const deleteTask = async (req: Request, res: Response): Promise<void> => 
     const { id } = req.params;
     const companyId = req.user!.companyId;
 
-    const task = await Task.findOne({
-      _id: id,
-      company: companyId,
-    });
+    const task = await Task.findOne({ _id: id, company: companyId });
 
     if (!task) {
-      res.status(404).json({
-        status: 'error',
-        message: 'Task not found.',
-      });
+      res.status(404).json({ status: 'error', message: 'Task not found.' });
       return;
     }
 
@@ -313,16 +254,10 @@ export const deleteTask = async (req: Request, res: Response): Promise<void> => 
 
     logger.info(`Task deleted: ${task.title} by ${req.user!.email}`);
 
-    res.status(200).json({
-      status: 'success',
-      message: 'Task deleted successfully!',
-    });
+    res.status(200).json({ status: 'success', message: 'Task deleted successfully!' });
   } catch (error: any) {
     logger.error('Delete task error:', error);
-    res.status(500).json({
-      status: 'error',
-      message: 'Error deleting task.',
-    });
+    res.status(500).json({ status: 'error', message: 'Error deleting task.' });
   }
 };
 
@@ -338,51 +273,29 @@ export const addComment = async (req: Request, res: Response): Promise<void> => 
     const userId = req.user!.userId;
 
     if (!text) {
-      res.status(400).json({
-        status: 'error',
-        message: 'Comment text is required.',
-      });
+      res.status(400).json({ status: 'error', message: 'Comment text is required.' });
       return;
     }
 
-    const task = await Task.findOne({
-      _id: id,
-      company: companyId,
-    });
+    const task = await Task.findOne({ _id: id, company: companyId });
 
     if (!task) {
-      res.status(404).json({
-        status: 'error',
-        message: 'Task not found.',
-      });
+      res.status(404).json({ status: 'error', message: 'Task not found.' });
       return;
     }
 
     task.comments = task.comments || [];
-    task.comments.push({
-      user: userId as any,
-      text,
-      createdAt: new Date(),
-    });
+    task.comments.push({ user: userId as any, text, createdAt: new Date() });
 
     await task.save();
     await task.populate('comments.user', 'firstName lastName email avatar');
 
     logger.info(`Comment added to task: ${task.title}`);
 
-    res.status(200).json({
-      status: 'success',
-      message: 'Comment added successfully!',
-      data: {
-        task,
-      },
-    });
+    res.status(200).json({ status: 'success', message: 'Comment added successfully!', data: { task } });
   } catch (error: any) {
     logger.error('Add comment error:', error);
-    res.status(500).json({
-      status: 'error',
-      message: 'Error adding comment.',
-    });
+    res.status(500).json({ status: 'error', message: 'Error adding comment.' });
   }
 };
 
@@ -396,21 +309,13 @@ export const getEmployeeKPI = async (req: Request, res: Response): Promise<void>
     const { startDate, endDate } = req.query;
     const companyId = req.user!.companyId;
 
-    // Verify user belongs to company
-    const user = await User.findOne({
-      _id: userId,
-      company: companyId,
-    });
+    const user = await User.findOne({ _id: userId, company: companyId });
 
     if (!user) {
-      res.status(404).json({
-        status: 'error',
-        message: 'User not found.',
-      });
+      res.status(404).json({ status: 'error', message: 'User not found.' });
       return;
     }
 
-    // Build query
     const query: any = {
       assignedTo: userId,
       company: companyId,
@@ -419,10 +324,7 @@ export const getEmployeeKPI = async (req: Request, res: Response): Promise<void>
     };
 
     if (startDate && endDate) {
-      query.completedDate = {
-        $gte: new Date(startDate as string),
-        $lte: new Date(endDate as string),
-      };
+      query.completedDate = { $gte: new Date(startDate as string), $lte: new Date(endDate as string) };
     }
 
     const completedTasks = await Task.find(query);
@@ -451,10 +353,7 @@ export const getEmployeeKPI = async (req: Request, res: Response): Promise<void>
     });
   } catch (error: any) {
     logger.error('Get employee KPI error:', error);
-    res.status(500).json({
-      status: 'error',
-      message: 'Error fetching KPI data.',
-    });
+    res.status(500).json({ status: 'error', message: 'Error fetching KPI data.' });
   }
 };
 

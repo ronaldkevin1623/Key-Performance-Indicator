@@ -1,4 +1,3 @@
-
 import { Request, Response } from 'express';
 import { User, Company } from '../models';
 import logger from '../utils/logger';
@@ -19,7 +18,6 @@ export const createEmployee = async (req: Request, res: Response): Promise<void>
       position,
     } = req.body;
 
-    // Validate required fields
     if (!email || !password || !firstName || !lastName) {
       res.status(400).json({
         status: 'error',
@@ -28,7 +26,6 @@ export const createEmployee = async (req: Request, res: Response): Promise<void>
       return;
     }
 
-    // Check if user email already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       res.status(400).json({
@@ -38,10 +35,8 @@ export const createEmployee = async (req: Request, res: Response): Promise<void>
       return;
     }
 
-    // Get admin's company
     const adminCompanyId = req.user!.companyId;
 
-    // Check company exists and has employee slots
     const company = await Company.findById(adminCompanyId);
     if (!company) {
       res.status(404).json({
@@ -51,7 +46,6 @@ export const createEmployee = async (req: Request, res: Response): Promise<void>
       return;
     }
 
-    // Check employee limit
     const currentEmployeeCount = await User.countDocuments({
       company: adminCompanyId,
       isActive: true,
@@ -65,10 +59,9 @@ export const createEmployee = async (req: Request, res: Response): Promise<void>
       return;
     }
 
-    // Create employee
     const employee = await User.create({
       email,
-      password, // Will be hashed automatically
+      password,
       firstName,
       lastName,
       role: 'employee',
@@ -114,10 +107,8 @@ export const getAllEmployees = async (req: Request, res: Response): Promise<void
   try {
     const companyId = req.user!.companyId;
 
-    // Get query parameters for filtering
     const { role, department, isActive } = req.query;
 
-    // Build query
     const query: any = { company: companyId };
 
     if (role) query.role = role;
@@ -140,6 +131,29 @@ export const getAllEmployees = async (req: Request, res: Response): Promise<void
     res.status(500).json({
       status: 'error',
       message: 'Error fetching employees.',
+    });
+  }
+};
+
+/**
+ * Get Employee Dropdown (Employee selector for assignment)
+ * GET /api/users/employee-dropdown
+ */
+export const getEmployeeDropdown = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const companyId = req.user!.companyId;
+    const employees = await User.find(
+      { company: companyId, role: "employee", isActive: true },
+      "firstName lastName email _id"
+    ).sort({ firstName: 1, lastName: 1 });
+
+    // Return an array of users for dropdown
+    res.status(200).json(employees);
+  } catch (error: any) {
+    logger.error('Fetch employee dropdown error:', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'Failed to fetch employees for assignment.',
     });
   }
 };
@@ -199,7 +213,6 @@ export const updateEmployee = async (req: Request, res: Response): Promise<void>
       isActive,
     } = req.body;
 
-    // Find employee
     const employee = await User.findOne({
       _id: id,
       company: companyId,
@@ -213,7 +226,6 @@ export const updateEmployee = async (req: Request, res: Response): Promise<void>
       return;
     }
 
-    // Prevent changing role or company
     if (req.body.role || req.body.company) {
       res.status(400).json({
         status: 'error',
@@ -222,7 +234,6 @@ export const updateEmployee = async (req: Request, res: Response): Promise<void>
       return;
     }
 
-    // Update fields
     if (firstName) employee.firstName = firstName;
     if (lastName) employee.lastName = lastName;
     if (phone !== undefined) employee.phone = phone;
@@ -281,7 +292,6 @@ export const deactivateEmployee = async (req: Request, res: Response): Promise<v
       return;
     }
 
-    // Prevent deactivating admin accounts
     if (employee.role === 'admin') {
       res.status(400).json({
         status: 'error',
@@ -311,6 +321,7 @@ export const deactivateEmployee = async (req: Request, res: Response): Promise<v
 export default {
   createEmployee,
   getAllEmployees,
+  getEmployeeDropdown,
   getEmployee,
   updateEmployee,
   deactivateEmployee,

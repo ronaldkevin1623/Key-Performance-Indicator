@@ -1,4 +1,3 @@
-
 import { Request, Response } from 'express';
 import { Project, User, Company } from '../models';
 import logger from '../utils/logger';
@@ -22,7 +21,6 @@ export const createProject = async (req: Request, res: Response): Promise<void> 
       color,
     } = req.body;
 
-    // Validate required fields
     if (!name) {
       res.status(400).json({
         status: 'error',
@@ -34,7 +32,6 @@ export const createProject = async (req: Request, res: Response): Promise<void> 
     const companyId = req.user!.companyId;
     const createdById = req.user!.userId;
 
-    // Check company project limit
     const company = await Company.findById(companyId);
     if (!company) {
       res.status(404).json({
@@ -57,7 +54,6 @@ export const createProject = async (req: Request, res: Response): Promise<void> 
       return;
     }
 
-    // Validate team members belong to same company
     if (teamMembers && teamMembers.length > 0) {
       const validMembers = await User.countDocuments({
         _id: { $in: teamMembers },
@@ -74,7 +70,6 @@ export const createProject = async (req: Request, res: Response): Promise<void> 
       }
     }
 
-    // Create project
     const project = await Project.create({
       name,
       description,
@@ -91,7 +86,6 @@ export const createProject = async (req: Request, res: Response): Promise<void> 
       isActive: true,
     });
 
-    // Populate the created project
     await project.populate('createdBy', 'firstName lastName email');
     await project.populate('teamMembers', 'firstName lastName email avatar');
 
@@ -121,10 +115,8 @@ export const getAllProjects = async (req: Request, res: Response): Promise<void>
   try {
     const companyId = req.user!.companyId;
 
-    // Query parameters for filtering
     const { status, priority, isActive } = req.query;
 
-    // Build query
     const query: any = { company: companyId };
 
     if (status) query.status = status;
@@ -136,13 +128,7 @@ export const getAllProjects = async (req: Request, res: Response): Promise<void>
       .populate('teamMembers', 'firstName lastName email avatar')
       .sort({ createdAt: -1 });
 
-    res.status(200).json({
-      status: 'success',
-      results: projects.length,
-      data: {
-        projects,
-      },
-    });
+    res.status(200).json(projects);
   } catch (error: any) {
     logger.error('Get projects error:', error);
     res.status(500).json({
@@ -214,7 +200,6 @@ export const updateProject = async (req: Request, res: Response): Promise<void> 
       isActive,
     } = req.body;
 
-    // Find project
     const project = await Project.findOne({
       _id: id,
       company: companyId,
@@ -228,7 +213,6 @@ export const updateProject = async (req: Request, res: Response): Promise<void> 
       return;
     }
 
-    // Validate team members if provided
     if (teamMembers && teamMembers.length > 0) {
       const validMembers = await User.countDocuments({
         _id: { $in: teamMembers },
@@ -245,7 +229,6 @@ export const updateProject = async (req: Request, res: Response): Promise<void> 
       }
     }
 
-    // Update fields
     if (name) project.name = name;
     if (description !== undefined) project.description = description;
     if (teamMembers) project.teamMembers = teamMembers;
@@ -302,7 +285,6 @@ export const deleteProject = async (req: Request, res: Response): Promise<void> 
       return;
     }
 
-    // Soft delete
     project.isActive = false;
     await project.save();
 
@@ -339,7 +321,6 @@ export const addTeamMember = async (req: Request, res: Response): Promise<void> 
       return;
     }
 
-    // Verify user belongs to company
     const user = await User.findOne({
       _id: userId,
       company: companyId,
@@ -367,7 +348,6 @@ export const addTeamMember = async (req: Request, res: Response): Promise<void> 
       return;
     }
 
-    // Check if already a member
     if (project.teamMembers.includes(user._id)) {
       res.status(400).json({
         status: 'error',

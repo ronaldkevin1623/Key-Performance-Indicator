@@ -41,8 +41,9 @@ const Tasks = () => {
 
   const fetchTasks = async (token: string) => {
     try {
-      const data = await tasksApi.getAll() as Task[];
-      setTasks(data);
+      const data = await tasksApi.getAll();
+      const taskArray = Array.isArray(data) ? data : data?.data?.tasks || [];
+      setTasks(taskArray);
     } catch (error) {
       toast({
         title: "Error",
@@ -55,9 +56,11 @@ const Tasks = () => {
     }
   };
 
-  const filteredTasks = tasks.filter((task) =>
-    task.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredTasks = Array.isArray(tasks)
+    ? tasks.filter((task) =>
+        task.title.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : [];
 
   const getStatusColor = (status: string) => {
     switch (status) {

@@ -1,8 +1,8 @@
-
 import { Router } from 'express';
 import {
   createEmployee,
   getAllEmployees,
+  getEmployeeDropdown,
   getEmployee,
   updateEmployee,
   deactivateEmployee,
@@ -20,6 +20,13 @@ router.use(authenticate, requireAdmin);
  * @access  Private (Admin only)
  */
 router.post('/', createEmployee);
+
+/**
+ * @route   GET /api/users/employee-dropdown
+ * @desc    Get all employees in company (for assignment dropdown)
+ * @access  Private (Admin only)
+ */
+router.get('/employee-dropdown', getEmployeeDropdown);
 
 /**
  * @route   GET /api/users

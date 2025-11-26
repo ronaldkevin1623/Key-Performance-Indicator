@@ -36,11 +36,15 @@ export const getAdminDashboard = async (req: Request, res: Response) => {
 export const getEmployeeDashboard = async (req: Request, res: Response) => {
   try {
     const userId = toObjectId(req.user?.userId);
+    const companyId = toObjectId(req.user?.companyId);
 
-    const totalTasks = await Task.countDocuments({ assignedTo: userId });
-    const completedTasks = await Task.countDocuments({ assignedTo: userId, status: "completed" });
+    // Only count active tasks for this employee in this company!
+    const filter = { assignedTo: userId, company: companyId, isActive: true };
+
+    const totalTasks = await Task.countDocuments(filter);
+    const completedTasks = await Task.countDocuments({ ...filter, status: "completed" });
     const pointsAgg = await Task.aggregate([
-      { $match: { assignedTo: userId } },
+      { $match: { ...filter } },
       { $group: { _id: null, total: { $sum: "$points" } } },
     ]);
     const totalPoints = pointsAgg.length ? pointsAgg[0].total : 0;

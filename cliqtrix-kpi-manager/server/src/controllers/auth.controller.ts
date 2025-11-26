@@ -8,96 +8,167 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
     const {
       companyName,
       companyEmail,
+      company, // Company ID, for employee signup
       firstName,
       lastName,
       email,
       password,
       phone,
+      role, // 'admin' or 'employee'
     } = req.body;
 
-    if (!companyName || !companyEmail || !firstName || !lastName || !email || !password) {
-      res.status(400).json({
-        status: 'error',
-        message: 'Please provide all required fields.',
+    // ADMIN SIGNUP FLOW (creates company and company admin user)
+    if (role === "admin") {
+      if (!companyName || !companyEmail || !firstName || !lastName || !email || !password) {
+        res.status(400).json({
+          status: 'error',
+          message: 'Please provide all required fields.',
+        });
+        return;
+      }
+
+      const existingCompany = await Company.findOne({ email: companyEmail });
+      if (existingCompany) {
+        res.status(400).json({
+          status: 'error',
+          message: 'Company email already registered.',
+        });
+        return;
+      }
+
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        res.status(400).json({
+          status: 'error',
+          message: 'User email already registered.',
+        });
+        return;
+      }
+
+      // Create company
+      const newCompany = await Company.create({
+        name: companyName,
+        email: companyEmail,
+        subscription: {
+          plan: 'free',
+          status: 'trial',
+          startDate: new Date(),
+          maxEmployees: 10,
+          maxProjects: 5,
+        },
+      });
+
+      // Create admin user
+      const adminUser = await User.create({
+        email,
+        password,
+        firstName,
+        lastName,
+        role: 'admin',
+        company: newCompany._id,
+        phone,
+        isActive: true,
+      });
+
+      // Generate tokens
+      const { accessToken, refreshToken } = generateTokenPair({
+        userId: adminUser._id.toString(),
+        email: adminUser.email,
+        role: adminUser.role,
+        companyId: newCompany._id.toString(),
+      });
+
+      logger.info(`New company registered: ${companyName} (${companyEmail})`);
+      logger.info(`Admin user created: ${email}`);
+      res.status(201).json({
+        status: 'success',
+        message: 'Company and admin account created successfully!',
+        data: {
+          user: {
+            id: adminUser._id,
+            email: adminUser.email,
+            firstName: adminUser.firstName,
+            lastName: adminUser.lastName,
+            role: adminUser.role,
+          },
+          company: {
+            id: newCompany._id,
+            name: newCompany.name,
+            email: newCompany.email,
+            subscription: newCompany.subscription,
+          },
+          tokens: {
+            accessToken,
+            refreshToken,
+          },
+        },
       });
       return;
     }
 
-    const existingCompany = await Company.findOne({ email: companyEmail });
-    if (existingCompany) {
-      res.status(400).json({
-        status: 'error',
-        message: 'Company email already registered.',
+    // EMPLOYEE SIGNUP FLOW (joins existing company by ID)
+    if (role === "employee") {
+      if (!company || !firstName || !lastName || !email || !password) {
+        res.status(400).json({
+          status: 'error',
+          message: 'Please provide all required fields.',
+        });
+        return;
+      }
+
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        res.status(400).json({
+          status: 'error',
+          message: 'User email already registered.',
+        });
+        return;
+      }
+
+      const foundCompany = await Company.findById(company);
+      if (!foundCompany) {
+        res.status(404).json({
+          status: 'error',
+          message: 'Company not found. Ask your admin for the correct Company ID.',
+        });
+        return;
+      }
+
+      const employeeUser = await User.create({
+        email,
+        password,
+        firstName,
+        lastName,
+        role: 'employee',
+        company: foundCompany._id,
+        phone,
+        isActive: true,
+      });
+
+      res.status(201).json({
+        status: 'success',
+        message: 'Employee account created successfully!',
+        data: {
+          user: {
+            id: employeeUser._id,
+            email: employeeUser.email,
+            firstName: employeeUser.firstName,
+            lastName: employeeUser.lastName,
+            role: employeeUser.role,
+          },
+          company: {
+            id: foundCompany._id,
+            name: foundCompany.name,
+          },
+        },
       });
       return;
     }
 
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      res.status(400).json({
-        status: 'error',
-        message: 'User email already registered.',
-      });
-      return;
-    }
-
-    // Create company
-    const company = await Company.create({
-      name: companyName,
-      email: companyEmail,
-      subscription: {
-        plan: 'free',
-        status: 'trial',
-        startDate: new Date(),
-        maxEmployees: 10,
-        maxProjects: 5,
-      },
-    });
-
-    // Create admin user
-    const user = await User.create({
-      email,
-      password,
-      firstName,
-      lastName,
-      role: 'admin',
-      company: company._id,
-      phone,
-      isActive: true,
-    });
-
-    // Generate tokens -- use only ObjectId string for companyId
-    const { accessToken, refreshToken } = generateTokenPair({
-      userId: user._id.toString(),
-      email: user.email,
-      role: user.role,
-      companyId: company._id.toString(),
-    });
-
-    logger.info(`New company registered: ${companyName} (${companyEmail})`);
-    logger.info(`Admin user created: ${email}`);
-    res.status(201).json({
-      status: 'success',
-      message: 'Company and admin account created successfully!',
-      data: {
-        user: {
-          id: user._id,
-          email: user.email,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          role: user.role,
-        },
-        company: {
-          id: company._id,
-          name: company.name,
-          email: company.email,
-          subscription: company.subscription,
-        },
-        tokens: {
-          accessToken,
-          refreshToken,
-        },
-      },
+    // Invalid request
+    res.status(400).json({
+      status: 'error',
+      message: 'Invalid signup request: missing or invalid role.',
     });
   } catch (error: any) {
     logger.error('Signup error:', error);

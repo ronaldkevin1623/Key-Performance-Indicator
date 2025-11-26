@@ -36,8 +36,9 @@ const EmployeeDashboard = () => {
 
   const fetchDashboardData = async (token: string) => {
     try {
-      const data = await dashboardApi.getEmployeeStats() as EmployeeStats;
-      setStats(data);
+      // Extract from .data as per backend controller response!
+      const data = await dashboardApi.getEmployeeStats();
+      setStats(data.data);
     } catch (error) {
       toast({
         title: "Error",
@@ -82,7 +83,7 @@ const EmployeeDashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-border/50 shadow-elegant hover:shadow-glow transition-shadow">
+          <Card className="border-border/50 shadow-elegant hover:shadow-glow transition-shadow cursor-pointer" onClick={() => navigate("/tasks/assigned")}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Assigned Tasks</CardTitle>
               <Clock className="h-4 w-4 text-primary" />
@@ -90,6 +91,13 @@ const EmployeeDashboard = () => {
             <CardContent>
               <div className="text-3xl font-bold text-foreground">{stats?.totalTasks || 0}</div>
               <p className="text-xs text-muted-foreground mt-1">Active assignments</p>
+              <button
+                className="mt-4 underline text-primary text-sm"
+                onClick={() => navigate("/tasks/assigned")}
+                style={{ background: "none", border: "none", cursor: "pointer" }}
+              >
+                View assigned tasks &rarr;
+              </button>
             </CardContent>
           </Card>
 
@@ -146,7 +154,13 @@ const EmployeeDashboard = () => {
               <CardDescription>Your latest assignments</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground">No tasks assigned yet</p>
+              <button
+                className="underline text-primary"
+                onClick={() => navigate("/tasks/assigned")}
+                style={{ background: "none", border: "none", cursor: "pointer" }}
+              >
+                View all assigned tasks in table &rarr;
+              </button>
             </CardContent>
           </Card>
         </div>

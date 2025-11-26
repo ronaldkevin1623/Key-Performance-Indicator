@@ -10,18 +10,20 @@ import Navigation from "@/components/Navigation";
 import { useToast } from "@/hooks/use-toast";
 import api from "@/lib/api";
 
-const { tasksApi, projectsApi } = api;
+const { tasksApi, projectsApi, usersApi } = api;
 
 const CreateTask = () => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     projectId: "",
+    assignedTo: "",
     priority: "medium",
     points: "",
     dueDate: "",
   });
   const [projects, setProjects] = useState<any[]>([]);
+  const [employees, setEmployees] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -32,17 +34,27 @@ const CreateTask = () => {
       navigate("/auth/login");
       return;
     }
-
     fetchProjects(token);
+    fetchEmployees(token);
   }, [navigate]);
 
   const fetchProjects = async (token: string) => {
     try {
-      const data = await projectsApi.getAll() as any[];
-      setProjects(data);
+      const data = await projectsApi.getAll();
+      setProjects(Array.isArray(data) ? data : data?.data?.projects || []);
     } catch (error) {
       console.error("Failed to fetch projects");
-      navigate('/auth/login');
+      navigate("/auth/login");
+    }
+  };
+
+  const fetchEmployees = async (token: string) => {
+    try {
+      const data = await usersApi.getEmployeeDropdown();
+      setEmployees(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error("Failed to fetch employees");
+      navigate("/auth/login");
     }
   };
 
@@ -54,6 +66,7 @@ const CreateTask = () => {
       await tasksApi.create({
         ...formData,
         points: parseInt(formData.points),
+        project: formData.projectId,
       });
       toast({
         title: "Task created",
@@ -66,7 +79,7 @@ const CreateTask = () => {
         description: "Failed to create task",
         variant: "destructive",
       });
-      navigate('/auth/login');
+      navigate("/auth/login");
     } finally {
       setLoading(false);
     }
@@ -108,14 +121,40 @@ const CreateTask = () => {
 
               <div className="space-y-2">
                 <Label htmlFor="project">Project</Label>
-                <Select value={formData.projectId} onValueChange={(value) => setFormData({ ...formData, projectId: value })}>
+                <Select
+                  value={formData.projectId}
+                  onValueChange={(value) =>
+                    setFormData({ ...formData, projectId: value })
+                  }
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select a project" />
                   </SelectTrigger>
                   <SelectContent>
                     {projects.map((project) => (
-                      <SelectItem key={project.id} value={project.id}>
+                      <SelectItem key={project.id || project._id} value={project.id || project._id}>
                         {project.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="assignedTo">Assign To (Employee)</Label>
+                <Select
+                  value={formData.assignedTo}
+                  onValueChange={(value) =>
+                    setFormData({ ...formData, assignedTo: value })
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select an employee" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {employees.map((emp) => (
+                      <SelectItem key={emp._id} value={emp._id}>
+                        {emp.firstName} {emp.lastName} ({emp.email})
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -125,7 +164,10 @@ const CreateTask = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="priority">Priority</Label>
-                  <Select value={formData.priority} onValueChange={(value) => setFormData({ ...formData, priority: value })}>
+                  <Select
+                    value={formData.priority}
+                    onValueChange={(value) => setFormData({ ...formData, priority: value })}
+                  >
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -144,7 +186,9 @@ const CreateTask = () => {
                     type="number"
                     placeholder="100"
                     value={formData.points}
-                    onChange={(e) => setFormData({ ...formData, points: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, points: e.target.value })
+                    }
                     required
                     min="1"
                   />
@@ -157,7 +201,9 @@ const CreateTask = () => {
                   id="dueDate"
                   type="date"
                   value={formData.dueDate}
-                  onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, dueDate: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -166,7 +212,11 @@ const CreateTask = () => {
                 <Button type="submit" disabled={loading} className="flex-1">
                   {loading ? "Creating..." : "Create Task"}
                 </Button>
-                <Button type="button" variant="outline" onClick={() => navigate("/tasks")}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => navigate("/tasks")}
+                >
                   Cancel
                 </Button>
               </div>
