@@ -19,6 +19,7 @@ import TaskDetails from "./pages/TaskDetails";
 import Leaderboard from "./pages/Leaderboard";
 import CreateTeam from "./pages/CreateTeam";
 import ManageTeams from "./pages/ManageTeams";
+import SetGoal from "@/pages/SetGoal";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ const App = () => (
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/teams/create" element={<CreateTeam />} />
           <Route path="/teams" element={<ManageTeams />} />
+          <Route path="/goals/set" element={<SetGoal />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

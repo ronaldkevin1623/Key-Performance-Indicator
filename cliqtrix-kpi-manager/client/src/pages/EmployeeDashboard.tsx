@@ -1,10 +1,23 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import Navigation from "@/components/Navigation";
-import { BarChart3, CheckCircle2, Clock, TrendingUp, Bell } from "lucide-react";
-import { Badge } from "@/components/ui/badge"; // if you don't have Badge, replace with simple spans
+import {
+  BarChart3,
+  CheckCircle2,
+  Clock,
+  TrendingUp,
+  Bell,
+  Target,
+} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import api from "@/lib/api";
 
@@ -24,7 +37,7 @@ interface TaskNotification {
   dueDate?: string;
 }
 
-const WEEKLY_TARGET_POINTS = 200; // adjust or fetch from backend later
+const WEEKLY_TARGET_POINTS = 200;
 
 const EmployeeDashboard = () => {
   const [stats, setStats] = useState<EmployeeStats | null>(null);
@@ -34,7 +47,6 @@ const EmployeeDashboard = () => {
   const [recentPending, setRecentPending] = useState<TaskNotification[]>([]);
   const [notifLoading, setNotifLoading] = useState(true);
 
-  // simple breakdown counts
   const [pendingCount, setPendingCount] = useState(0);
   const [inProgressCount, setInProgressCount] = useState(0);
   const [completedCount, setCompletedCount] = useState(0);
@@ -78,14 +90,16 @@ const EmployeeDashboard = () => {
       const data = await tasksApi.getAll();
       const list: any[] = Array.isArray(data) ? data : data?.tasks || data || [];
 
-      // sort newest first
       list.sort((a, b) => {
-        const da = new Date(a.updatedAt || a.dueDate || a.createdAt || 0).getTime();
-        const db = new Date(b.updatedAt || b.dueDate || b.createdAt || 0).getTime();
+        const da = new Date(
+          a.updatedAt || a.dueDate || a.createdAt || 0
+        ).getTime();
+        const db = new Date(
+          b.updatedAt || b.dueDate || b.createdAt || 0
+        ).getTime();
         return db - da;
       });
 
-      // counts
       const today = new Date();
       let pending = 0;
       let inProg = 0;
@@ -114,8 +128,12 @@ const EmployeeDashboard = () => {
       setCompletedCount(comp);
       setDueTodayCount(dueToday);
 
-      const completed = list.filter((t) => t.status === "completed").slice(0, 10);
-      const pendingList = list.filter((t) => t.status !== "completed").slice(0, 10);
+      const completed = list
+        .filter((t) => t.status === "completed")
+        .slice(0, 10);
+      const pendingList = list
+        .filter((t) => t.status !== "completed")
+        .slice(0, 10);
 
       setRecentCompleted(
         completed.map((t) => ({
@@ -142,8 +160,7 @@ const EmployeeDashboard = () => {
     navigate(`/tasks/${id}`);
   };
 
-  // Weekly goal + status
-  const weeklyPoints = stats?.totalPoints || 0; // you can replace with "points earned this week"
+  const weeklyPoints = stats?.totalPoints || 0;
   const weeklyProgress = Math.min(
     100,
     (weeklyPoints / WEEKLY_TARGET_POINTS) * 100
@@ -155,7 +172,6 @@ const EmployeeDashboard = () => {
       ? "On track"
       : "Needs focus";
 
-  // Simple milestones (front-end only)
   const milestones = useMemo(() => {
     const pts = stats?.totalPoints || 0;
     const comp = stats?.completedTasks || 0;
@@ -182,12 +198,50 @@ const EmployeeDashboard = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       <div className="container mx-auto px-6 py-24">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2">My Dashboard</h1>
-          <p className="text-muted-foreground">
-            Track your performance and assigned tasks
-          </p>
+        {/* Header + Set goal button */}
+        <div className="mb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+          <div>
+            <h1 className="text-4xl font-bold text-foreground mb-1">
+              My Dashboard
+            </h1>
+            <p className="text-muted-foreground">
+              Track your performance and assigned tasks
+            </p>
+          </div>
+          <button
+            onClick={() => navigate("/goals/set")}
+            className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-medium text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors"
+          >
+            <Target className="h-4 w-4" />
+            Set goal
+          </button>
         </div>
+
+        {/* Large horizontal goal card directly under header */}
+        <Card
+          className="mb-8 border-border/50 shadow-elegant hover:shadow-glow transition-shadow cursor-pointer"
+          onClick={() => navigate("/goals/set")}
+        >
+          <CardContent className="py-6 px-6 flex items-center justify-between gap-4">
+            <div className="flex items-start gap-4">
+              <div className="mt-1 h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <Target className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <div className="text-base font-semibold text-foreground">
+                  Today&apos;s goal
+                </div>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Focus on your most important tasks and complete them within
+                  your working hours to avoid overdue items.
+                </p>
+              </div>
+            </div>
+            <span className="hidden md:inline text-xs text-primary underline">
+              Tap to view / update &rarr;
+            </span>
+          </CardContent>
+        </Card>
 
         {/* KPI cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -200,7 +254,9 @@ const EmployeeDashboard = () => {
               <div className="text-3xl font-bold text-foreground">
                 {stats?.totalPoints || 0}
               </div>
-              <p className="text-xs text-muted-foreground mt-1">Performance score</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Performance score
+              </p>
             </CardContent>
           </Card>
 
@@ -209,14 +265,18 @@ const EmployeeDashboard = () => {
             onClick={() => navigate("/tasks/assigned")}
           >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Assigned Tasks</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Assigned Tasks
+              </CardTitle>
               <Clock className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-foreground">
                 {stats?.totalTasks || 0}
               </div>
-              <p className="text-xs text-muted-foreground mt-1">Active assignments</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Active assignments
+              </p>
               <button
                 className="mt-4 underline text-primary text-sm"
                 onClick={(e) => {
@@ -245,7 +305,9 @@ const EmployeeDashboard = () => {
 
           <Card className="border-border/50 shadow-elegant hover:shadow-glow transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Completion Rate</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Completion Rate
+              </CardTitle>
               <BarChart3 className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
@@ -259,14 +321,13 @@ const EmployeeDashboard = () => {
 
         {/* Bottom row: performance progress + notifications */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Performance progress with extra insights */}
+          {/* Performance Progress card */}
           <Card className="border-border/50 shadow-elegant">
             <CardHeader>
               <CardTitle>Performance Progress</CardTitle>
               <CardDescription>Your current achievement level</CardDescription>
             </CardHeader>
             <CardContent className="space-y-5">
-              {/* Overall completion */}
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm font-medium">Task Completion</span>
@@ -277,7 +338,6 @@ const EmployeeDashboard = () => {
                 <Progress value={stats?.completionRate || 0} className="h-2" />
               </div>
 
-              {/* Weekly goal */}
               <div>
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-sm font-medium">This week&apos;s goal</span>
@@ -302,28 +362,38 @@ const EmployeeDashboard = () => {
                 </div>
               </div>
 
-              {/* Status breakdown chips */}
               <div className="space-y-2">
                 <span className="text-xs font-medium text-muted-foreground">
                   Today&apos;s workload
                 </span>
                 <div className="flex flex-wrap gap-2 text-xs">
-                  <Badge variant="outline" className="border-sky-500/60 text-sky-300">
+                  <Badge
+                    variant="outline"
+                    className="border-sky-500/60 text-sky-300"
+                  >
                     Pending: {pendingCount}
                   </Badge>
-                  <Badge variant="outline" className="border-amber-500/60 text-amber-300">
+                  <Badge
+                    variant="outline"
+                    className="border-amber-500/60 text-amber-300"
+                  >
                     In progress: {inProgressCount}
                   </Badge>
-                  <Badge variant="outline" className="border-emerald-500/60 text-emerald-300">
+                  <Badge
+                    variant="outline"
+                    className="border-emerald-500/60 text-emerald-300"
+                  >
                     Completed: {completedCount}
                   </Badge>
-                  <Badge variant="outline" className="border-fuchsia-500/60 text-fuchsia-300">
+                  <Badge
+                    variant="outline"
+                    className="border-fuchsia-500/60 text-fuchsia-300"
+                  >
                     Due today: {dueTodayCount}
                   </Badge>
                 </div>
               </div>
 
-              {/* Milestones / recognition */}
               <div className="space-y-2">
                 <span className="text-xs font-medium text-muted-foreground">
                   Milestones
@@ -343,7 +413,7 @@ const EmployeeDashboard = () => {
             </CardContent>
           </Card>
 
-          {/* Notifications with scroll and navigation */}
+          {/* Notifications */}
           <Card className="border-border/50 shadow-elegant">
             <CardHeader>
               <CardTitle>Notifications</CardTitle>
@@ -351,16 +421,23 @@ const EmployeeDashboard = () => {
             </CardHeader>
             <CardContent>
               {notifLoading ? (
-                <p className="text-sm text-muted-foreground">Loading notifications...</p>
+                <p className="text-sm text-muted-foreground">
+                  Loading notifications...
+                </p>
               ) : recentCompleted.length === 0 && recentPending.length === 0 ? (
                 <p className="text-sm text-muted-foreground">
                   No notifications right now.
                 </p>
               ) : (
                 <div className="space-y-3 max-h-72 overflow-y-auto pr-1">
-                  {[...recentCompleted.map((t) => ({ t, type: "completed" as const })),
-                    ...recentPending.map((t) => ({ t, type: "pending" as const }))
-                  ].map(({ t, type }) => (
+                  {[...recentCompleted.map((t) => ({
+                    t,
+                    type: "completed" as const,
+                  })),
+                  ...recentPending.map((t) => ({
+                    t,
+                    type: "pending" as const,
+                  }))].map(({ t, type }) => (
                     <button
                       key={t._id}
                       type="button"
@@ -384,7 +461,9 @@ const EmployeeDashboard = () => {
                           {type === "completed"
                             ? "Great job! This task is finished."
                             : t.dueDate
-                            ? `Due ${new Date(t.dueDate).toLocaleDateString("en-IN")}`
+                            ? `Due ${new Date(t.dueDate).toLocaleDateString(
+                                "en-IN"
+                              )}`
                             : "No due date set."}
                         </div>
                       </div>
