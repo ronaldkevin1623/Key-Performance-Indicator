@@ -19,6 +19,9 @@ export const createTask = async (req: Request, res: Response): Promise<void> => 
       dueDate,
       estimatedHours,
       tags,
+      startDate,
+      endTime,
+      graceTime,
     } = req.body;
 
     if (!title || !project || !assignedTo) {
@@ -72,8 +75,14 @@ export const createTask = async (req: Request, res: Response): Promise<void> => 
       points: points || 10,
       dueDate,
       estimatedHours,
+      startDate,
+      endTime,
+      graceTime,
       tags: tags || [],
       isActive: true,
+      completionPercent: 0,
+      completionDetails: "",
+      earnedPoints: 0,
     });
 
     await task.populate('project', 'name color');
@@ -171,6 +180,37 @@ export const getTask = async (req: Request, res: Response): Promise<void> => {
 };
 
 /**
+ * helper: calculate earned points based on time and completion
+ */
+const calculateEarnedPoints = (task: any, newCompletionPercent?: number) => {
+  const totalPoints = task.points || 0;
+  const pct = (newCompletionPercent ?? task.completionPercent ?? 0) / 100;
+  const now = new Date();
+
+  if (pct >= 1 && task.endTime && now <= task.endTime) {
+    return totalPoints; // 100% before endTime
+  }
+
+  if (
+    pct >= 1 &&
+    task.endTime &&
+    task.graceTime &&
+    now > task.endTime &&
+    now <= task.graceTime
+  ) {
+    return Math.round(totalPoints * 0.5); // 50% between endTime and graceTime
+  }
+
+  if (task.graceTime && now > task.graceTime) {
+    // After grace: 30% of progress * total
+    return Math.round(totalPoints * pct * 0.3);
+  }
+
+  // Optional: partial points before deadlines
+  return Math.round(totalPoints * pct * 0.3);
+};
+
+/**
  * Update Task (Admin or assigned employee)
  * PATCH /api/tasks/:id
  */
@@ -191,6 +231,10 @@ export const updateTask = async (req: Request, res: Response): Promise<void> => 
       estimatedHours,
       actualHours,
       tags,
+      completionPercent,
+      completionDetails,
+      endTime,
+      graceTime,
     } = req.body;
 
     const task = await Task.findOne({ _id: id, company: companyId });
@@ -207,6 +251,8 @@ export const updateTask = async (req: Request, res: Response): Promise<void> => 
       }
       if (status) task.status = status;
       if (actualHours !== undefined) task.actualHours = actualHours;
+      if (completionPercent !== undefined) task.completionPercent = completionPercent;
+      if (completionDetails !== undefined) task.completionDetails = completionDetails;
     } else {
       if (title) task.title = title;
       if (description !== undefined) task.description = description;
@@ -217,7 +263,21 @@ export const updateTask = async (req: Request, res: Response): Promise<void> => 
       if (estimatedHours !== undefined) task.estimatedHours = estimatedHours;
       if (actualHours !== undefined) task.actualHours = actualHours;
       if (tags) task.tags = tags;
+      if (completionPercent !== undefined) task.completionPercent = completionPercent;
+      if (completionDetails !== undefined) task.completionDetails = completionDetails;
+      if (endTime !== undefined) task.endTime = endTime;
+      if (graceTime !== undefined) task.graceTime = graceTime;
     }
+
+    if (completionPercent !== undefined && completionPercent >= 100) {
+      task.status = 'completed';
+      if (!task.completedDate) {
+        task.completedDate = new Date();
+      }
+    }
+
+    // KPI calculation
+    task.earnedPoints = calculateEarnedPoints(task, completionPercent);
 
     await task.save();
     await task.populate('project', 'name color');
@@ -328,7 +388,7 @@ export const getEmployeeKPI = async (req: Request, res: Response): Promise<void>
     }
 
     const completedTasks = await Task.find(query);
-    const totalPoints = completedTasks.reduce((sum, task) => sum + task.points, 0);
+    const totalPoints = completedTasks.reduce((sum, task) => sum + (task.earnedPoints || 0), 0);
     const taskCount = completedTasks.length;
 
     res.status(200).json({

@@ -21,6 +21,8 @@ const CreateTask = () => {
     priority: "medium",
     points: "",
     dueDate: "",
+    endTime: "",
+    graceTime: "",
   });
   const [projects, setProjects] = useState<any[]>([]);
   const [employees, setEmployees] = useState<any[]>([]);
@@ -42,7 +44,7 @@ const CreateTask = () => {
     try {
       const data = await projectsApi.getAll();
       setProjects(Array.isArray(data) ? data : data?.data?.projects || []);
-    } catch (error) {
+    } catch {
       console.error("Failed to fetch projects");
       navigate("/auth/login");
     }
@@ -52,7 +54,7 @@ const CreateTask = () => {
     try {
       const data = await usersApi.getEmployeeDropdown();
       setEmployees(Array.isArray(data) ? data : []);
-    } catch (error) {
+    } catch {
       console.error("Failed to fetch employees");
       navigate("/auth/login");
     }
@@ -64,16 +66,22 @@ const CreateTask = () => {
 
     try {
       await tasksApi.create({
-        ...formData,
-        points: parseInt(formData.points),
+        title: formData.title,
+        description: formData.description,
         project: formData.projectId,
+        assignedTo: formData.assignedTo,
+        priority: formData.priority,
+        points: parseInt(formData.points, 10),
+        dueDate: formData.dueDate,
+        endTime: formData.endTime || null,
+        graceTime: formData.graceTime || null,
       });
       toast({
         title: "Task created",
         description: "Your task has been created successfully",
       });
       navigate("/tasks");
-    } catch (error) {
+    } catch {
       toast({
         title: "Error",
         description: "Failed to create task",
@@ -206,6 +214,33 @@ const CreateTask = () => {
                   }
                   required
                 />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="endTime">End Time</Label>
+                  <Input
+                    id="endTime"
+                    type="datetime-local"
+                    value={formData.endTime}
+                    onChange={(e) =>
+                      setFormData({ ...formData, endTime: e.target.value })
+                    }
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="graceTime">Grace / Max Time</Label>
+                  <Input
+                    id="graceTime"
+                    type="datetime-local"
+                    value={formData.graceTime}
+                    onChange={(e) =>
+                      setFormData({ ...formData, graceTime: e.target.value })
+                    }
+                    required
+                  />
+                </div>
               </div>
 
               <div className="flex gap-4 pt-4">

@@ -16,6 +16,7 @@ import CreateTask from "./pages/CreateTask";
 import NotFound from "./pages/NotFound";
 import AssignedTasksTable from "./pages/AssignedTasksTable";
 import TaskDetails from "./pages/TaskDetails";
+import Leaderboard from "./pages/Leaderboard";
 
 const queryClient = new QueryClient();
 
@@ -38,7 +39,7 @@ const App = () => (
           <Route path="/tasks/create" element={<CreateTask />} />
           <Route path="/tasks/assigned" element={<AssignedTasksTable />} />
           <Route path="/tasks/:taskId" element={<TaskDetails />} />
-
+          <Route path="/leaderboard" element={<Leaderboard />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

@@ -12,7 +12,7 @@ async function apiRequest<T>(
   options: RequestInit = {}
 ): Promise<T> {
   const token = getAuthToken();
-  
+
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
     ...options.headers,
@@ -67,14 +67,15 @@ export const authApi = {
 export const dashboardApi = {
   getAdminStats: () => apiRequest('/dashboard/admin'),
   getEmployeeStats: () => apiRequest('/dashboard/employee'),
+  getLeaderboard: () => apiRequest('/dashboard/leaderboard'),
 };
 
 // Projects API
 export const projectsApi = {
   getAll: () => apiRequest('/projects'),
-  
+
   getById: (id: string) => apiRequest(`/projects/${id}`),
-  
+
   create: (data: {
     name: string;
     description: string;
@@ -85,18 +86,18 @@ export const projectsApi = {
       method: 'POST',
       body: JSON.stringify(data),
     }),
-  
+
   update: (id: string, data: any) =>
     apiRequest(`/projects/${id}`, {
       method: 'PUT',
       body: JSON.stringify(data),
     }),
-  
+
   delete: (id: string) =>
     apiRequest(`/projects/${id}`, {
       method: 'DELETE',
     }),
-  
+
   getKPI: (id: string) => apiRequest(`/projects/${id}/kpi`),
 };
 
@@ -109,32 +110,41 @@ export const tasksApi = {
     const query = params.toString();
     return apiRequest(`/tasks${query ? `?${query}` : ''}`);
   },
-  
+
   getById: (id: string) => apiRequest(`/tasks/${id}`),
-  
+
   create: (data: {
     title: string;
     description: string;
-    projectId: string;
+    project: string;       // backend expects "project"
     assignedTo: string;
     priority: string;
     points: number;
     dueDate: string;
+    endTime?: string | null;
+    graceTime?: string | null;
   }) =>
     apiRequest('/tasks', {
       method: 'POST',
       body: JSON.stringify(data),
     }),
-  
+
   update: (id: string, data: any) =>
     apiRequest(`/tasks/${id}`, {
-      method: 'PUT',
+      method: 'PATCH',      // must match controller
       body: JSON.stringify(data),
     }),
-  
+
   delete: (id: string) =>
     apiRequest(`/tasks/${id}`, {
       method: 'DELETE',
+    }),
+
+  // progress / comment log entry
+  addComment: (id: string, data: { text: string }) =>
+    apiRequest(`/tasks/${id}/comments`, {
+      method: 'POST',
+      body: JSON.stringify(data),
     }),
 };
 
@@ -142,15 +152,17 @@ export const tasksApi = {
 export const usersApi = {
   getAll: () => apiRequest('/users'),
 
-  // Added method for employee dropdown
+  // Employee dropdown
   getEmployeeDropdown: () => apiRequest('/users/employee-dropdown'),
 
   getById: (id: string) => apiRequest(`/users/${id}`),
+
   update: (id: string, data: any) =>
     apiRequest(`/users/${id}`, {
       method: 'PUT',
       body: JSON.stringify(data),
     }),
+
   delete: (id: string) =>
     apiRequest(`/users/${id}`, {
       method: 'DELETE',

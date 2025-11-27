@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
-import { BarChart3, Users, FolderKanban, TrendingUp, Plus } from "lucide-react";
+import { BarChart3, Users, FolderKanban, TrendingUp, Plus, Trophy } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import api from "@/lib/api";
 
@@ -37,20 +37,21 @@ const AdminDashboard = () => {
       return;
     }
 
-    fetchDashboardData(token);
+    fetchDashboardData();
   }, [navigate]);
 
-  const fetchDashboardData = async (token: string) => {
+  const fetchDashboardData = async () => {
     try {
-      const data = await dashboardApi.getAdminStats() as DashboardStats;
-      setStats(data);
+      const data = await dashboardApi.getAdminStats();
+      const s = data?.data || data; // handle both shapes
+      setStats(s as DashboardStats);
     } catch (error) {
       toast({
         title: "Error",
         description: "Failed to load dashboard data",
         variant: "destructive",
       });
-      navigate('/auth/login');
+      navigate("/auth/login");
     } finally {
       setLoading(false);
     }
@@ -76,7 +77,11 @@ const AdminDashboard = () => {
             <h1 className="text-4xl font-bold text-foreground mb-2">Admin Dashboard</h1>
             <p className="text-muted-foreground">Company-wide performance overview</p>
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-3">
+            <Button variant="outline" onClick={() => navigate("/leaderboard")}>
+              <Trophy className="mr-2 h-4 w-4" />
+              Leaderboard
+            </Button>
             <Button onClick={() => navigate("/projects/create")}>
               <Plus className="mr-2 h-4 w-4" />
               New Project
@@ -128,7 +133,9 @@ const AdminDashboard = () => {
               <TrendingUp className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-foreground">{stats?.completionRate || 0}%</div>
+              <div className="text-3xl font-bold text-foreground">
+                {stats?.completionRate || 0}%
+              </div>
               <p className="text-xs text-muted-foreground mt-1">Overall performance</p>
             </CardContent>
           </Card>
@@ -145,11 +152,19 @@ const AdminDashboard = () => {
                 <FolderKanban className="mr-2 h-4 w-4" />
                 View All Projects
               </Button>
-              <Button className="w-full justify-start" variant="outline" onClick={() => navigate("/tasks")}>
+              <Button
+                className="w-full justify-start"
+                variant="outline"
+                onClick={() => navigate("/tasks")}
+              >
                 <BarChart3 className="mr-2 h-4 w-4" />
                 View All Tasks
               </Button>
-              <Button className="w-full justify-start" variant="outline" onClick={() => navigate("/users")}>
+              <Button
+                className="w-full justify-start"
+                variant="outline"
+                onClick={() => navigate("/users")}
+              >
                 <Users className="mr-2 h-4 w-4" />
                 Manage Team
               </Button>

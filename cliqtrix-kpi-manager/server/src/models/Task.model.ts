@@ -1,4 +1,3 @@
-
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
 // TypeScript Interface for Task document
@@ -16,6 +15,8 @@ export interface ITask extends Document {
   dueDate?: Date;
   startDate?: Date;
   completedDate?: Date;
+  endTime?: Date;
+  graceTime?: Date;
   estimatedHours?: number;
   actualHours?: number;
   tags?: string[];
@@ -25,6 +26,9 @@ export interface ITask extends Document {
     text: string;
     createdAt: Date;
   }>;
+  completionPercent?: number;
+  completionDetails?: string;
+  earnedPoints?: number;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -106,6 +110,14 @@ const taskSchema = new Schema<ITask>(
       type: Date,
       default: null,
     },
+    endTime: {
+      type: Date,
+      default: null,
+    },
+    graceTime: {
+      type: Date,
+      default: null,
+    },
     estimatedHours: {
       type: Number,
       min: [0, 'Estimated hours cannot be negative'],
@@ -146,6 +158,23 @@ const taskSchema = new Schema<ITask>(
         },
       },
     ],
+    completionPercent: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 100,
+    },
+    completionDetails: {
+      type: String,
+      trim: true,
+      default: "",
+      maxlength: [2000, 'Completion details cannot exceed 2000 characters'],
+    },
+    earnedPoints: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
     isActive: {
       type: Boolean,
       default: true,
@@ -242,7 +271,7 @@ taskSchema.statics.findOverdueTasks = function(userId: mongoose.Types.ObjectId) 
   }).sort({ dueDate: 1 });
 };
 
-// Static method: Calculate total points for employee
+// Static method: Calculate total points for employee (earnedPoints)
 taskSchema.statics.calculateTotalPoints = async function(
   userId: mongoose.Types.ObjectId,
   startDate?: Date,
@@ -259,7 +288,7 @@ taskSchema.statics.calculateTotalPoints = async function(
   }
 
   const tasks = await this.find(query);
-  return tasks.reduce((total: number, task: ITask) => total + task.points, 0);
+  return tasks.reduce((total: number, task: ITask) => total + (task.earnedPoints || 0), 0);
 };
 
 // Instance method: Mark as completed
@@ -284,14 +313,12 @@ taskSchema.methods.addComment = function(this: ITask, userId: mongoose.Types.Obj
 taskSchema.methods.updateStatus = function(this: ITask, newStatus: string) {
   this.status = newStatus as ITask['status'];
 
-  // Set dates based on status
   if (newStatus === 'in-progress' && !this.startDate) {
     this.startDate = new Date();
   }
   if (newStatus === 'completed' && !this.completedDate) {
     this.completedDate = new Date();
   }
-
   return this.save();
 };
 

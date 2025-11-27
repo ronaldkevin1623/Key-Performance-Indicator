@@ -1,10 +1,17 @@
 import { Router } from "express";
-import { getAdminDashboard, getEmployeeDashboard } from "../controllers/dashboard.controller";
+import {
+  getAdminDashboard,
+  getEmployeeDashboard,
+  getLeaderboard,
+} from "../controllers/dashboard.controller";
 import { authenticate } from "../middleware/auth.middleware";
 
 const router = Router();
 
-router.get("/admin", authenticate, getAdminDashboard);
-router.get("/employee", authenticate, getEmployeeDashboard);
+router.use(authenticate);
+
+router.get("/admin", getAdminDashboard);
+router.get("/employee", getEmployeeDashboard);
+router.get("/leaderboard", getLeaderboard);
 
 export default router;
