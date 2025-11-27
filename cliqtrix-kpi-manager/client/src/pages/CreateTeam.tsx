@@ -33,7 +33,7 @@ const CreateTeam = () => {
   const [search, setSearch] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [initialLoaded, setInitialLoaded] = useState(false);
+  const [editLoaded, setEditLoaded] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -62,11 +62,11 @@ const CreateTeam = () => {
     fetchEmployees();
   }, [navigate]);
 
-  // After projects & employees are loaded, if editProjectId exists, load that team
+  // Load existing team when editing
   useEffect(() => {
     if (!editProjectId) return;
     if (projects.length === 0 || employees.length === 0) return;
-    if (initialLoaded) return;
+    if (editLoaded) return;
 
     const loadTeam = async () => {
       try {
@@ -75,17 +75,17 @@ const CreateTeam = () => {
 
         setSelectedProjectId(editProjectId);
         setTeamName(t.name || "");
-        setSelectedMembers(t.members?.map((m: any) => m._id) || []);
-        setInitialLoaded(true);
+        setSelectedMembers((t.members || []).map((m: any) => m._id));
+        setEditLoaded(true);
       } catch {
-        // If no team yet, just preselect project
+        // No team yet for this project: still preselect project
         setSelectedProjectId(editProjectId);
-        setInitialLoaded(true);
+        setEditLoaded(true);
       }
     };
 
     loadTeam();
-  }, [editProjectId, projects, employees, initialLoaded]);
+  }, [editProjectId, projects, employees, editLoaded]);
 
   const fetchProjects = async () => {
     try {
@@ -147,7 +147,7 @@ const CreateTeam = () => {
         title: "Team saved",
         description: "Team has been created/updated for this project.",
       });
-      navigate(`/projects/${selectedProjectId}`);
+      navigate(`/teams`);
     } catch {
       toast({
         title: "Error",
@@ -164,8 +164,7 @@ const CreateTeam = () => {
     return text.includes(search.toLowerCase());
   });
 
-  const getEmployeeById = (id: string) =>
-    employees.find((e) => e._id === id);
+  const getEmployeeById = (id: string) => employees.find((e) => e._id === id);
 
   return (
     <div className="min-h-screen bg-background">
@@ -187,7 +186,7 @@ const CreateTeam = () => {
                 <Select
                   value={selectedProjectId}
                   onValueChange={(value) => setSelectedProjectId(value)}
-                  disabled={!!editProjectId} // lock project in edit mode
+                  disabled={!!editProjectId} // lock in edit mode
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select a project" />
@@ -212,7 +211,6 @@ const CreateTeam = () => {
                 />
               </div>
 
-              {/* Searchable multi-select for team members */}
               <div className="space-y-2">
                 <Label>Team Members</Label>
                 <div className="space-y-2">
@@ -250,7 +248,6 @@ const CreateTeam = () => {
                     )}
                   </div>
 
-                  {/* Selected members as chips */}
                   {selectedMembers.length > 0 && (
                     <div className="flex flex-wrap gap-2">
                       {selectedMembers.map((id) => {

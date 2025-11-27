@@ -1,12 +1,10 @@
 // API Configuration and Utility Functions
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
-// Get auth token from localStorage
 const getAuthToken = (): string | null => {
   return localStorage.getItem('token');
 };
 
-// Generic API request handler
 async function apiRequest<T>(
   endpoint: string,
   options: RequestInit = {}
@@ -42,7 +40,6 @@ export const authApi = {
       method: 'POST',
       body: JSON.stringify({ email, password }),
     }),
-
   signup: (data: {
     name: string;
     email: string;
@@ -54,9 +51,7 @@ export const authApi = {
       method: 'POST',
       body: JSON.stringify(data),
     }),
-
   getMe: () => apiRequest('/auth/me'),
-
   logout: () =>
     apiRequest('/auth/logout', {
       method: 'POST',
@@ -73,9 +68,7 @@ export const dashboardApi = {
 // Projects API
 export const projectsApi = {
   getAll: () => apiRequest('/projects'),
-
   getById: (id: string) => apiRequest(`/projects/${id}`),
-
   create: (data: {
     name: string;
     description: string;
@@ -86,19 +79,17 @@ export const projectsApi = {
       method: 'POST',
       body: JSON.stringify(data),
     }),
-
   update: (id: string, data: any) =>
     apiRequest(`/projects/${id}`, {
       method: 'PUT',
       body: JSON.stringify(data),
     }),
-
   delete: (id: string) =>
     apiRequest(`/projects/${id}`, {
       method: 'DELETE',
     }),
-
   getKPI: (id: string) => apiRequest(`/projects/${id}/kpi`),
+  getOverview: (id: string) => apiRequest(`/projects/${id}/overview`),
 };
 
 // Tasks API
@@ -110,13 +101,11 @@ export const tasksApi = {
     const query = params.toString();
     return apiRequest(`/tasks${query ? `?${query}` : ''}`);
   },
-
   getById: (id: string) => apiRequest(`/tasks/${id}`),
-
   create: (data: {
     title: string;
     description: string;
-    project: string;       // backend expects "project"
+    project: string;
     assignedTo: string;
     priority: string;
     points: number;
@@ -128,19 +117,15 @@ export const tasksApi = {
       method: 'POST',
       body: JSON.stringify(data),
     }),
-
   update: (id: string, data: any) =>
     apiRequest(`/tasks/${id}`, {
-      method: 'PATCH',      // must match controller
+      method: 'PATCH',
       body: JSON.stringify(data),
     }),
-
   delete: (id: string) =>
     apiRequest(`/tasks/${id}`, {
       method: 'DELETE',
     }),
-
-  // progress / comment log entry
   addComment: (id: string, data: { text: string }) =>
     apiRequest(`/tasks/${id}/comments`, {
       method: 'POST',
@@ -151,20 +136,30 @@ export const tasksApi = {
 // Users API
 export const usersApi = {
   getAll: () => apiRequest('/users'),
-
-  // Employee dropdown
   getEmployeeDropdown: () => apiRequest('/users/employee-dropdown'),
-
   getById: (id: string) => apiRequest(`/users/${id}`),
-
   update: (id: string, data: any) =>
     apiRequest(`/users/${id}`, {
       method: 'PUT',
       body: JSON.stringify(data),
     }),
-
   delete: (id: string) =>
     apiRequest(`/users/${id}`, {
+      method: 'DELETE',
+    }),
+};
+
+// Teams API
+export const teamsApi = {
+  getAll: () => apiRequest('/teams'),
+  getByProject: (projectId: string) => apiRequest(`/teams/project/${projectId}`), // NEW
+  upsertForProject: (projectId: string, data: { name: string; memberIds: string[] }) =>
+    apiRequest(`/teams/${projectId}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    }),
+  delete: (id: string) =>
+    apiRequest(`/teams/${id}`, {
       method: 'DELETE',
     }),
 };
@@ -175,4 +170,5 @@ export default {
   projectsApi,
   tasksApi,
   usersApi,
+  teamsApi,
 };

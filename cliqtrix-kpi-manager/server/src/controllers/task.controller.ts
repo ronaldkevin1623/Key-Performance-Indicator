@@ -180,37 +180,6 @@ export const getTask = async (req: Request, res: Response): Promise<void> => {
 };
 
 /**
- * helper: calculate earned points based on time and completion
- */
-const calculateEarnedPoints = (task: any, newCompletionPercent?: number) => {
-  const totalPoints = task.points || 0;
-  const pct = (newCompletionPercent ?? task.completionPercent ?? 0) / 100;
-  const now = new Date();
-
-  if (pct >= 1 && task.endTime && now <= task.endTime) {
-    return totalPoints; // 100% before endTime
-  }
-
-  if (
-    pct >= 1 &&
-    task.endTime &&
-    task.graceTime &&
-    now > task.endTime &&
-    now <= task.graceTime
-  ) {
-    return Math.round(totalPoints * 0.5); // 50% between endTime and graceTime
-  }
-
-  if (task.graceTime && now > task.graceTime) {
-    // After grace: 30% of progress * total
-    return Math.round(totalPoints * pct * 0.3);
-  }
-
-  // Optional: partial points before deadlines
-  return Math.round(totalPoints * pct * 0.3);
-};
-
-/**
  * Update Task (Admin or assigned employee)
  * PATCH /api/tasks/:id
  */
@@ -269,6 +238,7 @@ export const updateTask = async (req: Request, res: Response): Promise<void> => 
       if (graceTime !== undefined) task.graceTime = graceTime;
     }
 
+    // If 100% complete, update status and completedDate
     if (completionPercent !== undefined && completionPercent >= 100) {
       task.status = 'completed';
       if (!task.completedDate) {
@@ -276,8 +246,32 @@ export const updateTask = async (req: Request, res: Response): Promise<void> => 
       }
     }
 
-    // KPI calculation
-    task.earnedPoints = calculateEarnedPoints(task, completionPercent);
+    // KPI / earnedPoints calculation
+    if (completionPercent !== undefined) {
+      const now = new Date();
+      const totalPoints = task.points || 0;
+      const pct = completionPercent / 100;
+
+      if (pct >= 1 && task.endTime && now <= task.endTime) {
+        // Finished before end time: 100% of points
+        task.earnedPoints = totalPoints;
+      } else if (
+        pct >= 1 &&
+        task.endTime &&
+        task.graceTime &&
+        now > task.endTime &&
+        now <= task.graceTime
+      ) {
+        // Finished between end and grace: 50% of points
+        task.earnedPoints = Math.round(totalPoints * 0.5);
+      } else if (task.graceTime && now > task.graceTime) {
+        // After grace: 30% of progress * points
+        task.earnedPoints = Math.round(totalPoints * pct * 0.3);
+      } else {
+        // Before deadlines but not finished yet: partial credit (30% of progress)
+        task.earnedPoints = Math.round(totalPoints * pct * 0.3);
+      }
+    }
 
     await task.save();
     await task.populate('project', 'name color');
@@ -286,7 +280,11 @@ export const updateTask = async (req: Request, res: Response): Promise<void> => 
 
     logger.info(`Task updated: ${task.title} by ${req.user!.email}`);
 
-    res.status(200).json({ status: 'success', message: 'Task updated successfully!', data: { task } });
+    res.status(200).json({
+      status: 'success',
+      message: 'Task updated successfully!',
+      data: { task },
+    });
   } catch (error: any) {
     logger.error('Update task error:', error);
     res.status(500).json({ status: 'error', message: 'Error updating task.' });
@@ -352,7 +350,11 @@ export const addComment = async (req: Request, res: Response): Promise<void> => 
 
     logger.info(`Comment added to task: ${task.title}`);
 
-    res.status(200).json({ status: 'success', message: 'Comment added successfully!', data: { task } });
+    res.status(200).json({
+      status: 'success',
+      message: 'Comment added successfully!',
+      data: { task },
+    });
   } catch (error: any) {
     logger.error('Add comment error:', error);
     res.status(500).json({ status: 'error', message: 'Error adding comment.' });
@@ -384,11 +386,17 @@ export const getEmployeeKPI = async (req: Request, res: Response): Promise<void>
     };
 
     if (startDate && endDate) {
-      query.completedDate = { $gte: new Date(startDate as string), $lte: new Date(endDate as string) };
+      query.completedDate = {
+        $gte: new Date(startDate as string),
+        $lte: new Date(endDate as string),
+      };
     }
 
     const completedTasks = await Task.find(query);
-    const totalPoints = completedTasks.reduce((sum, task) => sum + (task.earnedPoints || 0), 0);
+    const totalPoints = completedTasks.reduce(
+      (sum, task) => sum + (task.earnedPoints || 0),
+      0
+    );
     const taskCount = completedTasks.length;
 
     res.status(200).json({

@@ -10,21 +10,36 @@ import api from "@/lib/api";
 
 const { projectsApi } = api;
 
-interface ProjectDetail {
-  id: string;
-  name: string;
-  description: string;
-  status: string;
-  startDate: string;
-  endDate: string;
-  teamSize: number;
-  completionRate: number;
-  totalTasks: number;
+interface ProjectOverview {
+  project: {
+    id: string;
+    name: string;
+    description?: string;
+    startDate?: string | null;
+    endDate?: string | null;
+  };
+  stats: {
+    teamSize: number;
+    completionRate: number;
+    totalTasks: number;
+  };
+  teamMembers: {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+  }[];
+  recentTasks: {
+    id: string;
+    title: string;
+    status: string;
+    dueDate?: string;
+  }[];
 }
 
 const ProjectDetail = () => {
   const { id } = useParams();
-  const [project, setProject] = useState<ProjectDetail | null>(null);
+  const [overview, setOverview] = useState<ProjectOverview | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -36,24 +51,27 @@ const ProjectDetail = () => {
       return;
     }
 
-    fetchProject(token);
-  }, [id, navigate]);
+    if (!id) return;
 
-  const fetchProject = async (token: string) => {
-    try {
-      const data = await projectsApi.getById(id!) as ProjectDetail;
-      setProject(data);
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to load project",
-        variant: "destructive",
-      });
-      navigate("/projects");
-    } finally {
-      setLoading(false);
-    }
-  };
+    const fetchOverview = async () => {
+      try {
+        const data = await projectsApi.getOverview(id);
+        const o = data?.data || data;
+        setOverview(o as ProjectOverview);
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Failed to load project",
+          variant: "destructive",
+        });
+        navigate("/projects");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOverview();
+  }, [id, navigate, toast]);
 
   if (loading) {
     return (
@@ -66,7 +84,12 @@ const ProjectDetail = () => {
     );
   }
 
-  if (!project) return null;
+  if (!overview) return null;
+
+  const { project, stats, teamMembers, recentTasks } = overview;
+
+  const start = project.startDate ? new Date(project.startDate) : null;
+  const end = project.endDate ? new Date(project.endDate) : null;
 
   return (
     <div className="min-h-screen bg-background">
@@ -74,8 +97,12 @@ const ProjectDetail = () => {
       <div className="container mx-auto px-6 py-24">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-foreground mb-2">{project.name}</h1>
-            <p className="text-muted-foreground">{project.description}</p>
+            <h1 className="text-4xl font-bold text-foreground mb-2">
+              {project.name}
+            </h1>
+            <p className="text-muted-foreground">
+              {project.description || "No description provided."}
+            </p>
           </div>
           <Button onClick={() => navigate("/tasks/create")}>
             <Plus className="mr-2 h-4 w-4" />
@@ -90,7 +117,9 @@ const ProjectDetail = () => {
               <Users className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-foreground">{project.teamSize}</div>
+              <div className="text-3xl font-bold text-foreground">
+                {stats.teamSize}
+              </div>
               <p className="text-xs text-muted-foreground mt-1">Active members</p>
             </CardContent>
           </Card>
@@ -101,7 +130,9 @@ const ProjectDetail = () => {
               <TrendingUp className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-foreground">{project.totalTasks}</div>
+              <div className="text-3xl font-bold text-foreground">
+                {stats.totalTasks}
+              </div>
               <p className="text-xs text-muted-foreground mt-1">Assigned tasks</p>
             </CardContent>
           </Card>
@@ -113,7 +144,9 @@ const ProjectDetail = () => {
             </CardHeader>
             <CardContent>
               <div className="text-sm font-bold text-foreground">
-                {new Date(project.startDate).toLocaleDateString()} - {new Date(project.endDate).toLocaleDateString()}
+                {start && end
+                  ? `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`
+                  : "Not set"}
               </div>
               <p className="text-xs text-muted-foreground mt-1">Project duration</p>
             </CardContent>
@@ -129,9 +162,11 @@ const ProjectDetail = () => {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium">Completion</span>
-                <span className="text-sm text-muted-foreground">{project.completionRate}%</span>
+                <span className="text-sm text-muted-foreground">
+                  {stats.completionRate}%
+                </span>
               </div>
-              <Progress value={project.completionRate} className="h-3" />
+              <Progress value={stats.completionRate} className="h-3" />
             </div>
           </CardContent>
         </Card>
@@ -143,7 +178,22 @@ const ProjectDetail = () => {
               <CardDescription>Project contributors</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground">No team members assigned yet</p>
+              {teamMembers.length === 0 ? (
+                <p className="text-sm text-muted-foreground">
+                  No team members assigned yet
+                </p>
+              ) : (
+                <ul className="space-y-2 text-sm">
+                  {teamMembers.map((m) => (
+                    <li key={m._id}>
+                      {m.firstName} {m.lastName}{" "}
+                      <span className="text-xs text-muted-foreground">
+                        ({m.email})
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </CardContent>
           </Card>
 
@@ -153,7 +203,24 @@ const ProjectDetail = () => {
               <CardDescription>Latest project activities</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground">No tasks created yet</p>
+              {recentTasks.length === 0 ? (
+                <p className="text-sm text-muted-foreground">
+                  No tasks created yet
+                </p>
+              ) : (
+                <ul className="space-y-2 text-sm">
+                  {recentTasks.map((t) => (
+                    <li key={t.id} className="flex justify-between">
+                      <span>{t.title}</span>
+                      <span className="text-xs text-muted-foreground">
+                        {t.status}
+                        {t.dueDate &&
+                          ` • ${new Date(t.dueDate).toLocaleDateString()}`}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </CardContent>
           </Card>
         </div>

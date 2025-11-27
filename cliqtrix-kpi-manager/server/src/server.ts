@@ -7,15 +7,17 @@ import compression from 'compression';
 
 // Import configurations
 import { connectDatabase, setupDatabaseEventHandlers, getDatabaseStatus } from './config/database.config';
-import corsOptions from './config/cors.config'; // ✅ Use custom CORS config!
+import corsOptions from './config/cors.config';
 import logger from './utils/logger';
 
 // Import routes
 import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
 import projectRoutes from './routes/project.routes';
+import projectStatsRoutes from './routes/projectStats.routes'; // <-- NEW
 import taskRoutes from './routes/task.routes';
 import dashboardRoutes from './routes/dashboard.routes';
+import teamRoutes from './routes/team.routes';
 
 // Load environment variables
 const result = dotenv.config({ path: '.env.development' });
@@ -66,8 +68,11 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/projects', projectRoutes);
+app.use('/api/projects', projectStatsRoutes); // <-- mount overview route (/projects/:id/overview)
 app.use('/api/tasks', taskRoutes);
-app.use('/api/dashboard', dashboardRoutes); // REGISTER DASHBOARD ROUTE
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/teams', teamRoutes);
+
 // ============================================
 // TEST ROUTES
 // ============================================
@@ -113,6 +118,7 @@ app.get('/', (_req: Request, res: Response) => {
         delete: 'DELETE /api/projects/:id',
         addMember: 'POST /api/projects/:id/members',
         removeMember: 'DELETE /api/projects/:id/members/:userId',
+        overview: 'GET /api/projects/:id/overview',
       },
       tasks: {
         create: 'POST /api/tasks',
@@ -122,6 +128,9 @@ app.get('/', (_req: Request, res: Response) => {
         delete: 'DELETE /api/tasks/:id',
         addComment: 'POST /api/tasks/:id/comments',
         getKPI: 'GET /api/tasks/kpi/:userId',
+      },
+      teams: {
+        upsertForProject: 'PUT /api/teams/:projectId',
       },
     },
   });
@@ -137,6 +146,8 @@ app.get('/api', (_req: Request, res: Response) => {
       users: '/api/users',
       projects: '/api/projects',
       tasks: '/api/tasks',
+      dashboard: '/api/dashboard',
+      teams: '/api/teams',
     },
   });
 });

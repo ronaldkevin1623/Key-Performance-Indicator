@@ -43,7 +43,7 @@ const AdminDashboard = () => {
   const fetchDashboardData = async () => {
     try {
       const data = await dashboardApi.getAdminStats();
-      const s = data?.data || data; // handle both shapes
+      const s = (data as any)?.data || data;
       setStats(s as DashboardStats);
     } catch (error) {
       toast({
@@ -82,6 +82,10 @@ const AdminDashboard = () => {
               <Trophy className="mr-2 h-4 w-4" />
               Leaderboard
             </Button>
+            <Button variant="outline" onClick={() => navigate("/teams/create")}>
+              <Users className="mr-2 h-4 w-4" />
+              Create Team
+            </Button>
             <Button onClick={() => navigate("/projects/create")}>
               <Plus className="mr-2 h-4 w-4" />
               New Project
@@ -100,7 +104,9 @@ const AdminDashboard = () => {
               <FolderKanban className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-foreground">{stats?.totalProjects || 0}</div>
+              <div className="text-3xl font-bold text-foreground">
+                {stats?.totalProjects || 0}
+              </div>
               <p className="text-xs text-muted-foreground mt-1">Active projects</p>
             </CardContent>
           </Card>
@@ -111,7 +117,9 @@ const AdminDashboard = () => {
               <Users className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-foreground">{stats?.totalUsers || 0}</div>
+              <div className="text-3xl font-bold text-foreground">
+                {stats?.totalUsers || 0}
+              </div>
               <p className="text-xs text-muted-foreground mt-1">Active users</p>
             </CardContent>
           </Card>
@@ -122,7 +130,9 @@ const AdminDashboard = () => {
               <BarChart3 className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-foreground">{stats?.totalTasks || 0}</div>
+              <div className="text-3xl font-bold text-foreground">
+                {stats?.totalTasks || 0}
+              </div>
               <p className="text-xs text-muted-foreground mt-1">Across all projects</p>
             </CardContent>
           </Card>
@@ -163,7 +173,7 @@ const AdminDashboard = () => {
               <Button
                 className="w-full justify-start"
                 variant="outline"
-                onClick={() => navigate("/users")}
+                onClick={() => navigate("/teams")}
               >
                 <Users className="mr-2 h-4 w-4" />
                 Manage Team
