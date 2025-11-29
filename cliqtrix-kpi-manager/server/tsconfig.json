@@ -19,8 +19,9 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
-    
-    /* Path mapping */
+    "types": ["node"],              // <- add this
+    "noEmitOnError": false,         // <- ensure build emits JS even with TS type errors
+
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
