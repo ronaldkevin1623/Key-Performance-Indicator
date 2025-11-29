@@ -12,3 +12,51 @@
 2025-11-29 10:37:27 [[31merror[39m]: [31mGet project error: Cast to ObjectId failed for value "kpi-progress" (type string) at path "_id" for model "Project"[39m
 2025-11-29 10:37:45 [[31merror[39m]: [31mGet project error: Cast to ObjectId failed for value "kpi-progress" (type string) at path "_id" for model "Project"[39m
 2025-11-29 10:37:58 [[31merror[39m]: [31mGet project error: Cast to ObjectId failed for value "kpi-progress" (type string) at path "_id" for model "Project"[39m
+2025-11-29 18:41:21 [[31merror[39m]: [31mError: Not allowed by CORS[39m
+2025-11-29 18:41:22 [[31merror[39m]: [31mError: Not allowed by CORS[39m
+[31m    at origin (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\src\config\cors.config.ts:20:16)[39m
+[31m    at C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:219:13[39m
+[31m    at optionsCallback (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:199:9)[39m
+[31m    at corsMiddleware (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:204:7)[39m
+[31m    at Layer.handle [as handle_request] (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\layer.js:95:5)[39m
+[31m    at trim_prefix (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:328:13)[39m
+[31m    at C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:286:9[39m
+[31m    at router.process_params (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:346:12)[39m
+[31m    at next (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:280:10)[39m
+[31m    at internalNext (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\helmet\index.cjs:531:6)[39m
+2025-11-29 18:41:23 [[31merror[39m]: [31mError: Not allowed by CORS[39m
+2025-11-29 18:41:23 [[31merror[39m]: [31mError: Not allowed by CORS[39m
+[31m    at origin (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\src\config\cors.config.ts:20:16)[39m
+[31m    at C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:219:13[39m
+[31m    at optionsCallback (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:199:9)[39m
+[31m    at corsMiddleware (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:204:7)[39m
+[31m    at Layer.handle [as handle_request] (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\layer.js:95:5)[39m
+[31m    at trim_prefix (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:328:13)[39m
+[31m    at C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:286:9[39m
+[31m    at router.process_params (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:346:12)[39m
+[31m    at next (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:280:10)[39m
+[31m    at internalNext (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\helmet\index.cjs:531:6)[39m
+2025-11-29 18:41:47 [[31merror[39m]: [31mError: Not allowed by CORS[39m
+2025-11-29 18:41:47 [[31merror[39m]: [31mError: Not allowed by CORS[39m
+[31m    at origin (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\src\config\cors.config.ts:20:16)[39m
+[31m    at C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:219:13[39m
+[31m    at optionsCallback (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:199:9)[39m
+[31m    at corsMiddleware (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:204:7)[39m
+[31m    at Layer.handle [as handle_request] (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\layer.js:95:5)[39m
+[31m    at trim_prefix (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:328:13)[39m
+[31m    at C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:286:9[39m
+[31m    at router.process_params (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:346:12)[39m
+[31m    at next (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:280:10)[39m
+[31m    at internalNext (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\helmet\index.cjs:531:6)[39m
+2025-11-29 18:42:00 [[31merror[39m]: [31mError: Not allowed by CORS[39m
+2025-11-29 18:42:00 [[31merror[39m]: [31mError: Not allowed by CORS[39m
+[31m    at origin (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\src\config\cors.config.ts:20:16)[39m
+[31m    at C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:219:13[39m
+[31m    at optionsCallback (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:199:9)[39m
+[31m    at corsMiddleware (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:204:7)[39m
+[31m    at Layer.handle [as handle_request] (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\layer.js:95:5)[39m
+[31m    at trim_prefix (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:328:13)[39m
+[31m    at C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:286:9[39m
+[31m    at router.process_params (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:346:12)[39m
+[31m    at next (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:280:10)[39m
+[31m    at internalNext (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\helmet\index.cjs:531:6)[39m

@@ -1785,3 +1785,176 @@
 2025-11-29 13:42:51 [[32minfo[39m]: [32m📊 Database: connected[39m
 2025-11-29 13:42:51 [[32minfo[39m]: [32m============================================================[39m
 2025-11-29 13:48:53 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-29 14:40:30 [[33mwarn[39m]: [33mMongoose disconnected from MongoDB[39m
+2025-11-29 14:40:31 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 14:53:00 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 14:53:00 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 14:53:00 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 14:53:00 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-00.1bdy5g3.mongodb.net[39m
+2025-11-29 14:53:00 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 14:53:00 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 14:53:00 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 14:53:00 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 14:53:00 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 14:53:00 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 14:53:00 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 15:27:11 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-29 15:31:03 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-29 15:31:20 [[32minfo[39m]: [32mUser logged in: rsamruthhalakshmi@gmail.com (employee)[39m
+2025-11-29 16:03:28 [[33mwarn[39m]: [33mMongoose disconnected from MongoDB[39m
+2025-11-29 16:03:28 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 16:05:08 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-29 16:13:59 [[32minfo[39m]: [32mUser logged in: rsamruthhalakshmi@gmail.com (employee)[39m
+2025-11-29 16:24:08 [[32minfo[39m]: [32mUser logged in: rsamruthhalakshmi@gmail.com (employee)[39m
+2025-11-29 16:32:42 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 16:32:42 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 16:32:42 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 16:32:42 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-00.1bdy5g3.mongodb.net[39m
+2025-11-29 16:32:42 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 16:32:42 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 16:32:42 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 16:32:42 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 16:32:42 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 16:32:42 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 16:32:42 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 16:32:50 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 16:32:50 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 16:32:50 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 16:32:50 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-02.1bdy5g3.mongodb.net[39m
+2025-11-29 16:32:50 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 16:32:50 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 16:32:50 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 16:32:50 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 16:32:50 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 16:32:50 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 16:32:50 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 16:35:45 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-29 17:08:15 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 17:08:15 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 17:08:15 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 17:08:15 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-02.1bdy5g3.mongodb.net[39m
+2025-11-29 17:08:15 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 17:08:15 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 17:08:15 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 17:08:15 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 17:08:15 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 17:08:15 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 17:08:15 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 17:08:22 [[33mwarn[39m]: [33mMongoose disconnected from MongoDB[39m
+2025-11-29 17:08:31 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 17:08:31 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 17:08:31 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 17:08:31 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-02.1bdy5g3.mongodb.net[39m
+2025-11-29 17:08:31 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 17:08:31 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 17:08:31 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 17:08:31 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 17:08:31 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 17:08:31 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 17:08:31 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 17:08:44 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-29 17:09:55 [[32minfo[39m]: [32mUser logged in: samkevin1623@gmail.com (employee)[39m
+2025-11-29 17:11:55 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-29 17:29:53 [[33mwarn[39m]: [33mMongoose disconnected from MongoDB[39m
+2025-11-29 17:29:53 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 17:33:29 [[32minfo[39m]: [32mUser logged in: samkevin1623@gmail.com (employee)[39m
+2025-11-29 17:48:59 [[33mwarn[39m]: [33mMongoose disconnected from MongoDB[39m
+2025-11-29 17:48:59 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 18:06:54 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-29 18:41:21 [[31merror[39m]: [31mError: Not allowed by CORS[39m
+2025-11-29 18:41:22 [[31merror[39m]: [31mError: Not allowed by CORS[39m
+[31m    at origin (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\src\config\cors.config.ts:20:16)[39m
+[31m    at C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:219:13[39m
+[31m    at optionsCallback (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:199:9)[39m
+[31m    at corsMiddleware (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:204:7)[39m
+[31m    at Layer.handle [as handle_request] (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\layer.js:95:5)[39m
+[31m    at trim_prefix (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:328:13)[39m
+[31m    at C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:286:9[39m
+[31m    at router.process_params (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:346:12)[39m
+[31m    at next (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:280:10)[39m
+[31m    at internalNext (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\helmet\index.cjs:531:6)[39m
+2025-11-29 18:41:23 [[31merror[39m]: [31mError: Not allowed by CORS[39m
+2025-11-29 18:41:23 [[31merror[39m]: [31mError: Not allowed by CORS[39m
+[31m    at origin (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\src\config\cors.config.ts:20:16)[39m
+[31m    at C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:219:13[39m
+[31m    at optionsCallback (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:199:9)[39m
+[31m    at corsMiddleware (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:204:7)[39m
+[31m    at Layer.handle [as handle_request] (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\layer.js:95:5)[39m
+[31m    at trim_prefix (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:328:13)[39m
+[31m    at C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:286:9[39m
+[31m    at router.process_params (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:346:12)[39m
+[31m    at next (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:280:10)[39m
+[31m    at internalNext (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\helmet\index.cjs:531:6)[39m
+2025-11-29 18:41:36 [[33mwarn[39m]: [33mMongoose disconnected from MongoDB[39m
+2025-11-29 18:41:43 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 18:41:43 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 18:41:43 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 18:41:43 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-02.1bdy5g3.mongodb.net[39m
+2025-11-29 18:41:43 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 18:41:43 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 18:41:43 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 18:41:43 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 18:41:43 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 18:41:43 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 18:41:43 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 18:41:47 [[31merror[39m]: [31mError: Not allowed by CORS[39m
+2025-11-29 18:41:47 [[31merror[39m]: [31mError: Not allowed by CORS[39m
+[31m    at origin (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\src\config\cors.config.ts:20:16)[39m
+[31m    at C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:219:13[39m
+[31m    at optionsCallback (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:199:9)[39m
+[31m    at corsMiddleware (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:204:7)[39m
+[31m    at Layer.handle [as handle_request] (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\layer.js:95:5)[39m
+[31m    at trim_prefix (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:328:13)[39m
+[31m    at C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:286:9[39m
+[31m    at router.process_params (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:346:12)[39m
+[31m    at next (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:280:10)[39m
+[31m    at internalNext (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\helmet\index.cjs:531:6)[39m
+2025-11-29 18:42:00 [[31merror[39m]: [31mError: Not allowed by CORS[39m
+2025-11-29 18:42:00 [[31merror[39m]: [31mError: Not allowed by CORS[39m
+[31m    at origin (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\src\config\cors.config.ts:20:16)[39m
+[31m    at C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:219:13[39m
+[31m    at optionsCallback (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:199:9)[39m
+[31m    at corsMiddleware (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\cors\lib\index.js:204:7)[39m
+[31m    at Layer.handle [as handle_request] (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\layer.js:95:5)[39m
+[31m    at trim_prefix (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:328:13)[39m
+[31m    at C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:286:9[39m
+[31m    at router.process_params (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:346:12)[39m
+[31m    at next (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\express\lib\router\index.js:280:10)[39m
+[31m    at internalNext (C:\office\project\ZohoCliq\Key-Performance-Indicator\cliqtrix-kpi-manager\server\node_modules\helmet\index.cjs:531:6)[39m
+2025-11-29 18:42:26 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-29 18:46:45 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 18:46:45 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 18:46:45 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 18:46:45 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-02.1bdy5g3.mongodb.net[39m
+2025-11-29 18:46:45 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 18:46:45 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 18:46:45 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 18:46:45 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 18:46:45 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 18:46:45 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 18:46:45 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 18:46:55 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-29 19:03:22 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-29 22:52:09 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 22:52:09 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 22:52:09 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 22:52:09 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-01.1bdy5g3.mongodb.net[39m
+2025-11-29 22:52:09 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 22:52:09 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 22:52:09 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 22:52:09 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 22:52:09 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 22:52:09 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 22:52:09 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 22:57:50 [[33mwarn[39m]: [33mMongoose disconnected from MongoDB[39m
+2025-11-29 22:58:58 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 22:58:58 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 22:58:58 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 22:58:58 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-02.1bdy5g3.mongodb.net[39m
+2025-11-29 22:58:58 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 22:58:58 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 22:58:58 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 22:58:58 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 22:58:58 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 22:58:58 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 22:58:58 [[32minfo[39m]: [32m============================================================[39m

@@ -22,6 +22,9 @@ import ManageTeams from "./pages/ManageTeams";
 import SetGoal from "@/pages/SetGoal";
 import CompanyProgress from "@/pages/CompanyProgress";
 import CompletedGoals from "@/pages/CompletedGoals";
+import ProfilePage from "@/pages/ProfilePage";
+import ChatbotPage from "@/pages/ChatbotPage";
+import EmployeeProgressPage from "@/pages/EmployeeProgressPage";
 
 const queryClient = new QueryClient();
 
@@ -50,6 +53,9 @@ const App = () => (
           <Route path="/goals/set" element={<SetGoal />} />
           <Route path="/admin/progress" element={<CompanyProgress />} />
           <Route path="/goals/completed" element={<CompletedGoals />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/chatbot" element={<ChatbotPage />} />
+          <Route path="/employee/progress" element={<EmployeeProgressPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

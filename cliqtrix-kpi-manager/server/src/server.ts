@@ -22,13 +22,20 @@ import projectStatsRoutes from "./routes/projectStats.routes";
 import taskRoutes from "./routes/task.routes";
 import dashboardRoutes from "./routes/dashboard.routes";
 import teamRoutes from "./routes/team.routes";
-import goalRoutes from "./routes/goal.routes"; // <-- NEW
+import goalRoutes from "./routes/goal.routes";
+import chatbotRoutes from "./routes/chatbot.routes";
 
-// Load environment variables
-const result = dotenv.config({ path: ".env.development" });
+// Load environment variables (switch file by NODE_ENV)
+const envFile =
+  process.env.NODE_ENV === "production"
+    ? ".env.production"
+    : ".env.development";
+
+const result = dotenv.config({ path: envFile });
 
 // Debug logging
 console.log("=== ENV FILE DEBUG ===");
+console.log("Using env file:", envFile);
 console.log("Dotenv loaded:", result.error ? "FAILED" : "SUCCESS");
 if (result.error) {
   console.log("Error:", result.error.message);
@@ -80,7 +87,8 @@ app.use("/api/projects", projectStatsRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/teams", teamRoutes);
-app.use("/api/goals", goalRoutes); // <-- NEW
+app.use("/api/goals", goalRoutes);
+app.use("/api/chatbot", chatbotRoutes);
 
 // ============================================
 // TEST ROUTES
@@ -144,6 +152,9 @@ app.get("/", (_req: Request, res: Response) => {
         today: "GET /api/goals/today",
         complete: "PATCH /api/goals/:id/complete",
       },
+      chatbot: {
+        chat: "POST /api/chatbot",
+      },
     },
   });
 });
@@ -160,6 +171,7 @@ app.get("/api", (_req: Request, res: Response) => {
       dashboard: "/api/dashboard",
       teams: "/api/teams",
       goals: "/api/goals",
+      chatbot: "/api/chatbot",
     },
   });
 });

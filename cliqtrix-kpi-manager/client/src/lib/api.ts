@@ -166,6 +166,7 @@ export const usersApi = {
   getAll: () => apiRequest("/users"),
   getEmployeeDropdown: () => apiRequest("/users/employee-dropdown"),
   getById: (id: string) => apiRequest(`/users/${id}`),
+  getMyProfile: () => apiRequest("/users/me/profile"),
   update: (id: string, data: any) =>
     apiRequest(`/users/${id}`, {
       method: "PUT",
@@ -218,6 +219,15 @@ export const goalsApi = {
     }),
 };
 
+// Chatbot API (used by ChatbotPage)
+export const chatbotApi = {
+  send: (messages: { role: string; content: string }[]) =>
+    apiRequest("/chatbot", {
+      method: "POST",
+      body: JSON.stringify({ messages }),
+    }),
+};
+
 export default {
   authApi,
   dashboardApi,
@@ -226,4 +236,5 @@ export default {
   usersApi,
   teamsApi,
   goalsApi,
+  chatbotApi,
 };

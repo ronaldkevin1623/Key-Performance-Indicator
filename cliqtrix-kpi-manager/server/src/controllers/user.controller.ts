@@ -1,12 +1,15 @@
-import { Request, Response } from 'express';
-import { User, Company } from '../models';
-import logger from '../utils/logger';
+import { Request, Response } from "express";
+import { User, Company } from "../models";
+import logger from "../utils/logger";
 
 /**
  * Create Employee (Admin only)
  * POST /api/users
  */
-export const createEmployee = async (req: Request, res: Response): Promise<void> => {
+export const createEmployee = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const {
       email,
@@ -20,8 +23,8 @@ export const createEmployee = async (req: Request, res: Response): Promise<void>
 
     if (!email || !password || !firstName || !lastName) {
       res.status(400).json({
-        status: 'error',
-        message: 'Please provide email, password, firstName, and lastName.',
+        status: "error",
+        message: "Please provide email, password, firstName, and lastName.",
       });
       return;
     }
@@ -29,8 +32,8 @@ export const createEmployee = async (req: Request, res: Response): Promise<void>
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       res.status(400).json({
-        status: 'error',
-        message: 'Email already registered.',
+        status: "error",
+        message: "Email already registered.",
       });
       return;
     }
@@ -40,8 +43,8 @@ export const createEmployee = async (req: Request, res: Response): Promise<void>
     const company = await Company.findById(adminCompanyId);
     if (!company) {
       res.status(404).json({
-        status: 'error',
-        message: 'Company not found.',
+        status: "error",
+        message: "Company not found.",
       });
       return;
     }
@@ -53,7 +56,7 @@ export const createEmployee = async (req: Request, res: Response): Promise<void>
 
     if (currentEmployeeCount >= company.subscription.maxEmployees) {
       res.status(403).json({
-        status: 'error',
+        status: "error",
         message: `Employee limit reached. Your plan allows ${company.subscription.maxEmployees} employees.`,
       });
       return;
@@ -64,7 +67,7 @@ export const createEmployee = async (req: Request, res: Response): Promise<void>
       password,
       firstName,
       lastName,
-      role: 'employee',
+      role: "employee",
       company: adminCompanyId,
       phone,
       department,
@@ -75,8 +78,8 @@ export const createEmployee = async (req: Request, res: Response): Promise<void>
     logger.info(`Employee created: ${email} by admin ${req.user!.email}`);
 
     res.status(201).json({
-      status: 'success',
-      message: 'Employee created successfully!',
+      status: "success",
+      message: "Employee created successfully!",
       data: {
         employee: {
           id: employee._id,
@@ -91,10 +94,10 @@ export const createEmployee = async (req: Request, res: Response): Promise<void>
       },
     });
   } catch (error: any) {
-    logger.error('Create employee error:', error);
+    logger.error("Create employee error:", error);
     res.status(500).json({
-      status: 'error',
-      message: 'Error creating employee.',
+      status: "error",
+      message: "Error creating employee.",
     });
   }
 };
@@ -103,7 +106,10 @@ export const createEmployee = async (req: Request, res: Response): Promise<void>
  * Get All Employees (Admin only)
  * GET /api/users
  */
-export const getAllEmployees = async (req: Request, res: Response): Promise<void> => {
+export const getAllEmployees = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const companyId = req.user!.companyId;
 
@@ -113,24 +119,24 @@ export const getAllEmployees = async (req: Request, res: Response): Promise<void
 
     if (role) query.role = role;
     if (department) query.department = department;
-    if (isActive !== undefined) query.isActive = isActive === 'true';
+    if (isActive !== undefined) query.isActive = isActive === "true";
 
     const employees = await User.find(query)
-      .select('-password')
+      .select("-password")
       .sort({ createdAt: -1 });
 
     res.status(200).json({
-      status: 'success',
+      status: "success",
       results: employees.length,
       data: {
         employees,
       },
     });
   } catch (error: any) {
-    logger.error('Get employees error:', error);
+    logger.error("Get employees error:", error);
     res.status(500).json({
-      status: 'error',
-      message: 'Error fetching employees.',
+      status: "error",
+      message: "Error fetching employees.",
     });
   }
 };
@@ -139,7 +145,10 @@ export const getAllEmployees = async (req: Request, res: Response): Promise<void
  * Get Employee Dropdown (Employee selector for assignment)
  * GET /api/users/employee-dropdown
  */
-export const getEmployeeDropdown = async (req: Request, res: Response): Promise<void> => {
+export const getEmployeeDropdown = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const companyId = req.user!.companyId;
     const employees = await User.find(
@@ -147,13 +156,12 @@ export const getEmployeeDropdown = async (req: Request, res: Response): Promise<
       "firstName lastName email _id"
     ).sort({ firstName: 1, lastName: 1 });
 
-    // Return an array of users for dropdown
     res.status(200).json(employees);
   } catch (error: any) {
-    logger.error('Fetch employee dropdown error:', error);
+    logger.error("Fetch employee dropdown error:", error);
     res.status(500).json({
-      status: 'error',
-      message: 'Failed to fetch employees for assignment.',
+      status: "error",
+      message: "Failed to fetch employees for assignment.",
     });
   }
 };
@@ -162,7 +170,10 @@ export const getEmployeeDropdown = async (req: Request, res: Response): Promise<
  * Get Single Employee (Admin only)
  * GET /api/users/:id
  */
-export const getEmployee = async (req: Request, res: Response): Promise<void> => {
+export const getEmployee = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const { id } = req.params;
     const companyId = req.user!.companyId;
@@ -170,27 +181,27 @@ export const getEmployee = async (req: Request, res: Response): Promise<void> =>
     const employee = await User.findOne({
       _id: id,
       company: companyId,
-    }).select('-password');
+    }).select("-password");
 
     if (!employee) {
       res.status(404).json({
-        status: 'error',
-        message: 'Employee not found.',
+        status: "error",
+        message: "Employee not found.",
       });
       return;
     }
 
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: {
         employee,
       },
     });
   } catch (error: any) {
-    logger.error('Get employee error:', error);
+    logger.error("Get employee error:", error);
     res.status(500).json({
-      status: 'error',
-      message: 'Error fetching employee.',
+      status: "error",
+      message: "Error fetching employee.",
     });
   }
 };
@@ -199,7 +210,10 @@ export const getEmployee = async (req: Request, res: Response): Promise<void> =>
  * Update Employee (Admin only)
  * PATCH /api/users/:id
  */
-export const updateEmployee = async (req: Request, res: Response): Promise<void> => {
+export const updateEmployee = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const { id } = req.params;
     const companyId = req.user!.companyId;
@@ -220,16 +234,16 @@ export const updateEmployee = async (req: Request, res: Response): Promise<void>
 
     if (!employee) {
       res.status(404).json({
-        status: 'error',
-        message: 'Employee not found.',
+        status: "error",
+        message: "Employee not found.",
       });
       return;
     }
 
     if (req.body.role || req.body.company) {
       res.status(400).json({
-        status: 'error',
-        message: 'Cannot change role or company.',
+        status: "error",
+        message: "Cannot change role or company.",
       });
       return;
     }
@@ -243,11 +257,13 @@ export const updateEmployee = async (req: Request, res: Response): Promise<void>
 
     await employee.save();
 
-    logger.info(`Employee updated: ${employee.email} by admin ${req.user!.email}`);
+    logger.info(
+      `Employee updated: ${employee.email} by admin ${req.user!.email}`
+    );
 
     res.status(200).json({
-      status: 'success',
-      message: 'Employee updated successfully!',
+      status: "success",
+      message: "Employee updated successfully!",
       data: {
         employee: {
           id: employee._id,
@@ -262,10 +278,10 @@ export const updateEmployee = async (req: Request, res: Response): Promise<void>
       },
     });
   } catch (error: any) {
-    logger.error('Update employee error:', error);
+    logger.error("Update employee error:", error);
     res.status(500).json({
-      status: 'error',
-      message: 'Error updating employee.',
+      status: "error",
+      message: "Error updating employee.",
     });
   }
 };
@@ -274,7 +290,10 @@ export const updateEmployee = async (req: Request, res: Response): Promise<void>
  * Deactivate Employee (Admin only)
  * DELETE /api/users/:id
  */
-export const deactivateEmployee = async (req: Request, res: Response): Promise<void> => {
+export const deactivateEmployee = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const { id } = req.params;
     const companyId = req.user!.companyId;
@@ -286,16 +305,16 @@ export const deactivateEmployee = async (req: Request, res: Response): Promise<v
 
     if (!employee) {
       res.status(404).json({
-        status: 'error',
-        message: 'Employee not found.',
+        status: "error",
+        message: "Employee not found.",
       });
       return;
     }
 
-    if (employee.role === 'admin') {
+    if (employee.role === "admin") {
       res.status(400).json({
-        status: 'error',
-        message: 'Cannot deactivate admin accounts.',
+        status: "error",
+        message: "Cannot deactivate admin accounts.",
       });
       return;
     }
@@ -303,17 +322,56 @@ export const deactivateEmployee = async (req: Request, res: Response): Promise<v
     employee.isActive = false;
     await employee.save();
 
-    logger.info(`Employee deactivated: ${employee.email} by admin ${req.user!.email}`);
+    logger.info(
+      `Employee deactivated: ${employee.email} by admin ${req.user!.email}`
+    );
 
     res.status(200).json({
-      status: 'success',
-      message: 'Employee deactivated successfully!',
+      status: "success",
+      message: "Employee deactivated successfully!",
     });
   } catch (error: any) {
-    logger.error('Deactivate employee error:', error);
+    logger.error("Deactivate employee error:", error);
     res.status(500).json({
-      status: 'error',
-      message: 'Error deactivating employee.',
+      status: "error",
+      message: "Error deactivating employee.",
+    });
+  }
+};
+
+/**
+ * Get logged-in user's profile + company info
+ * GET /api/users/me/profile
+ */
+export const getMyProfile = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const userId = req.user!.userId;
+
+    const user = await User.findById(userId)
+      .select("-password")
+      .populate("company") // uses Company model from ../models
+      .lean();
+
+    if (!user) {
+      res.status(404).json({
+        status: "error",
+        message: "User not found.",
+      });
+      return;
+    }
+
+    res.status(200).json({
+      status: "success",
+      data: { user },
+    });
+  } catch (error: any) {
+    logger.error("Get my profile error:", error);
+    res.status(500).json({
+      status: "error",
+      message: "Failed to load profile.",
     });
   }
 };
@@ -325,4 +383,5 @@ export default {
   getEmployee,
   updateEmployee,
   deactivateEmployee,
+  getMyProfile,
 };

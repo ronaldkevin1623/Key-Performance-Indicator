@@ -17,6 +17,7 @@ import {
   TrendingUp,
   Bell,
   Target,
+  Bot,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
@@ -180,9 +181,7 @@ const EmployeeDashboard = () => {
       const res = await goalsApi.getToday();
       const data = (res as any).data || res;
       const goals: EmployeeGoal[] = data.goals || data.goal || [];
-      goals.sort(
-        (a, b) => (a.priority ?? 999) - (b.priority ?? 999)
-      );
+      goals.sort((a, b) => (a.priority ?? 999) - (b.priority ?? 999));
       setTodayGoals(goals);
     } catch {
       setTodayGoals([]);
@@ -246,7 +245,7 @@ const EmployeeDashboard = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       <div className="container mx-auto px-6 py-24">
-        {/* Header + Set goal button */}
+        {/* Header + Chatbot + Set goal buttons */}
         <div className="mb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
           <div>
             <h1 className="text-4xl font-bold text-foreground mb-1">
@@ -256,13 +255,22 @@ const EmployeeDashboard = () => {
               Track your performance and assigned tasks
             </p>
           </div>
-          <button
-            onClick={() => navigate("/goals/set")}
-            className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-medium text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors"
-          >
-            <Target className="h-4 w-4" />
-            Set goal
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => navigate("/chatbot")}
+              className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-xs font-medium text-foreground hover:bg-muted transition-colors"
+            >
+              <Bot className="h-4 w-4" />
+              Chatbot
+            </button>
+            <button
+              onClick={() => navigate("/goals/set")}
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-medium text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors"
+            >
+              <Target className="h-4 w-4" />
+              Set goal
+            </button>
+          </div>
         </div>
 
         {/* Today's goals card */}
@@ -388,7 +396,11 @@ const EmployeeDashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-border/50 shadow-elegant hover:shadow-glow transition-shadow">
+          {/* UPDATED: Completion Rate card navigates to employee progress */}
+          <Card
+            className="border-border/50 shadow-elegant hover:shadow-glow transition-shadow cursor-pointer"
+            onClick={() => navigate("/employee/progress")}
+          >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Completion Rate
@@ -399,7 +411,9 @@ const EmployeeDashboard = () => {
               <div className="text-3xl font-bold text-foreground">
                 {stats?.completionRate || 0}%
               </div>
-              <p className="text-xs text-muted-foreground mt-1">Success rate</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                View progress over time
+              </p>
             </CardContent>
           </Card>
         </div>

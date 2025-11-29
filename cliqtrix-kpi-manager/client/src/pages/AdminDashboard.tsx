@@ -20,6 +20,7 @@ import {
   ArrowUpRight,
   ArrowDownRight,
   Target,
+  Bot,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import api from "@/lib/api";
@@ -125,6 +126,13 @@ const AdminDashboard = () => {
               <Plus className="mr-2 h-4 w-4" />
               New Task
             </Button>
+            <Button
+              variant="outline"
+              onClick={() => navigate("/chatbot")}
+            >
+              <Bot className="mr-2 h-4 w-4" />
+              Chatbot
+            </Button>
           </div>
         </div>
 
@@ -132,33 +140,43 @@ const AdminDashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <Card className="border-border/50 shadow-elegant hover:shadow-glow transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Projects</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Total Projects
+              </CardTitle>
               <FolderKanban className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-foreground">
                 {stats?.totalProjects || 0}
               </div>
-              <p className="text-xs text-muted-foreground mt-1">Active projects</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Active projects
+              </p>
             </CardContent>
           </Card>
 
           <Card className="border-border/50 shadow-elegant hover:shadow-glow transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Team Members</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Team Members
+              </CardTitle>
               <Users className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-foreground">
                 {stats?.totalUsers || 0}
               </div>
-              <p className="text-xs text-muted-foreground mt-1">Active users</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Active users
+              </p>
             </CardContent>
           </Card>
 
           <Card className="border-border/50 shadow-elegant hover:shadow-glow transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Tasks</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Total Tasks
+              </CardTitle>
               <BarChart3 className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
