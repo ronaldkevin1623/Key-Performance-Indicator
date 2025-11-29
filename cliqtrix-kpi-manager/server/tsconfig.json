@@ -19,9 +19,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["node"],              // <- add this
-    "noEmitOnError": false,         // <- ensure build emits JS even with TS type errors
-
+    "noEmitOnError": false,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
