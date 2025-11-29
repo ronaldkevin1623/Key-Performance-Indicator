@@ -4,5 +4,6 @@
     "noEmitOnError": false,
     "skipLibCheck": true
   },
-  "exclude": ["node_modules", "dist", "**/*.test.ts", "src/**/*.ts"] 
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
 }
