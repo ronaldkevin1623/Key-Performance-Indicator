@@ -1,13 +1,30 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
-import { BarChart3, Users, FolderKanban, TrendingUp, Plus, Trophy } from "lucide-react";
+import {
+  BarChart3,
+  Users,
+  FolderKanban,
+  TrendingUp,
+  Plus,
+  Trophy,
+  Gauge,
+  ArrowUpRight,
+  ArrowDownRight,
+  Target,
+} from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import api from "@/lib/api";
 
-const { dashboardApi } = api;
+const { dashboardApi } = api as any;
 
 interface DashboardStats {
   totalProjects: number;
@@ -57,6 +74,15 @@ const AdminDashboard = () => {
     }
   };
 
+  const healthLabel =
+    (stats?.completionRate || 0) >= 75
+      ? "Healthy"
+      : (stats?.completionRate || 0) >= 50
+      ? "Stable"
+      : "Needs attention";
+
+  const completionRate = stats?.completionRate || 0;
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background">
@@ -71,11 +97,16 @@ const AdminDashboard = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      <div className="container mx-auto px-6 py-24">
-        <div className="flex items-center justify-between mb-8">
+      <div className="container mx-auto px-6 py-24 space-y-8">
+        {/* Header */}
+        <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-bold text-foreground mb-2">Admin Dashboard</h1>
-            <p className="text-muted-foreground">Company-wide performance overview</p>
+            <h1 className="text-4xl font-bold text-foreground mb-2">
+              Admin Dashboard
+            </h1>
+            <p className="text-muted-foreground">
+              Company-wide performance overview
+            </p>
           </div>
           <div className="flex gap-3">
             <Button variant="outline" onClick={() => navigate("/leaderboard")}>
@@ -97,7 +128,8 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {/* KPI cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <Card className="border-border/50 shadow-elegant hover:shadow-glow transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Total Projects</CardTitle>
@@ -133,24 +165,35 @@ const AdminDashboard = () => {
               <div className="text-3xl font-bold text-foreground">
                 {stats?.totalTasks || 0}
               </div>
-              <p className="text-xs text-muted-foreground mt-1">Across all projects</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Across all projects
+              </p>
             </CardContent>
           </Card>
 
-          <Card className="border-border/50 shadow-elegant hover:shadow-glow transition-shadow">
+          {/* Completion Rate card now navigates to chart page */}
+          <Card
+            className="border-border/50 shadow-elegant hover:shadow-glow transition-shadow cursor-pointer"
+            onClick={() => navigate("/admin/progress")}
+          >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Completion Rate</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Completion Rate
+              </CardTitle>
               <TrendingUp className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-foreground">
-                {stats?.completionRate || 0}%
+                {completionRate}%
               </div>
-              <p className="text-xs text-muted-foreground mt-1">Overall performance</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Overall performance (tap to view trend)
+              </p>
             </CardContent>
           </Card>
         </div>
 
+        {/* Quick actions + Performance snapshot */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card className="border-border/50 shadow-elegant">
             <CardHeader>
@@ -158,7 +201,10 @@ const AdminDashboard = () => {
               <CardDescription>Manage your team and projects</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
-              <Button className="w-full justify-start" onClick={() => navigate("/projects")}>
+              <Button
+                className="w-full justify-start"
+                onClick={() => navigate("/projects")}
+              >
                 <FolderKanban className="mr-2 h-4 w-4" />
                 View All Projects
               </Button>
@@ -183,11 +229,82 @@ const AdminDashboard = () => {
 
           <Card className="border-border/50 shadow-elegant">
             <CardHeader>
-              <CardTitle>Recent Activity</CardTitle>
-              <CardDescription>Latest updates from your team</CardDescription>
+              <CardTitle>Performance Snapshot</CardTitle>
+              <CardDescription>
+                Where your organisation stands right now
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground">No recent activity</p>
+              <div className="mb-4 flex items-center gap-3">
+                <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Gauge className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <div className="text-sm font-semibold text-foreground">
+                    Overall health: {healthLabel}
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Based on completion rate across all active tasks.
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                <div className="rounded-md border border-border/40 px-3 py-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-muted-foreground">
+                      Delivery status
+                    </span>
+                    {completionRate >= 60 ? (
+                      <ArrowUpRight className="h-3 w-3 text-emerald-400" />
+                    ) : (
+                      <ArrowDownRight className="h-3 w-3 text-amber-300" />
+                    )}
+                  </div>
+                  <div className="mt-1 text-sm text-foreground">
+                    {completionRate}% tasks completed
+                  </div>
+                </div>
+
+                <div className="rounded-md border border-border/40 px-3 py-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-muted-foreground">
+                      Work in progress
+                    </span>
+                    <BarChart3 className="h-3 w-3 text-primary" />
+                  </div>
+                  <div className="mt-1 text-sm text-foreground">
+                    {stats?.totalTasks || 0} total tasks across{" "}
+                    {stats?.totalProjects || 0} projects
+                  </div>
+                </div>
+
+                <div className="rounded-md border border-border/40 px-3 py-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-muted-foreground">
+                      Team size
+                    </span>
+                    <Users className="h-3 w-3 text-sky-400" />
+                  </div>
+                  <div className="mt-1 text-sm text-foreground">
+                    {stats?.totalUsers || 0} active members
+                  </div>
+                </div>
+
+                <div className="rounded-md border border-border/40 px-3 py-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-muted-foreground">
+                      Focus suggestion
+                    </span>
+                    <Target className="h-3 w-3 text-primary" />
+                  </div>
+                  <div className="mt-1 text-xs text-muted-foreground">
+                    {completionRate < 50
+                      ? "Review overdue tasks and rebalance workload."
+                      : "Keep recognising teams that finish high‑impact work."}
+                  </div>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </div>

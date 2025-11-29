@@ -8,3 +8,7 @@
 2025-11-26 20:41:02 [[31merror[39m]: [31m❌ MongoDB connection error:[39m
 2025-11-26 21:29:56 [[31merror[39m]: [31mSignup error: E11000 duplicate key error collection: cliqtrix-kpi.companies index: name_1 dup key: { name: "Zoho" }[39m
 2025-11-26 21:30:14 [[31merror[39m]: [31mSignup error: E11000 duplicate key error collection: cliqtrix-kpi.companies index: name_1 dup key: { name: "Zoho" }[39m
+2025-11-29 10:37:27 [[31merror[39m]: [31mGet project error: Cast to ObjectId failed for value "kpi-progress" (type string) at path "_id" for model "Project"[39m
+2025-11-29 10:37:27 [[31merror[39m]: [31mGet project error: Cast to ObjectId failed for value "kpi-progress" (type string) at path "_id" for model "Project"[39m
+2025-11-29 10:37:45 [[31merror[39m]: [31mGet project error: Cast to ObjectId failed for value "kpi-progress" (type string) at path "_id" for model "Project"[39m
+2025-11-29 10:37:58 [[31merror[39m]: [31mGet project error: Cast to ObjectId failed for value "kpi-progress" (type string) at path "_id" for model "Project"[39m

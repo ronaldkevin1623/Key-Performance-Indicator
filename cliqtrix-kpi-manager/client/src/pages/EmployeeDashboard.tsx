@@ -1,3 +1,4 @@
+// src/pages/EmployeeDashboard.tsx
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -21,7 +22,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import api from "@/lib/api";
 
-const { dashboardApi, tasksApi } = api as any;
+const { dashboardApi, tasksApi, goalsApi } = api as any;
 
 interface EmployeeStats {
   totalTasks: number;
@@ -37,13 +38,26 @@ interface TaskNotification {
   dueDate?: string;
 }
 
+interface EmployeeGoal {
+  _id: string;
+  title: string;
+  description?: string;
+  targetPoints?: number;
+  priority?: number;
+  startDate: string;
+  endDate: string;
+  status: "open" | "done";
+}
+
 const WEEKLY_TARGET_POINTS = 200;
 
 const EmployeeDashboard = () => {
   const [stats, setStats] = useState<EmployeeStats | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const [recentCompleted, setRecentCompleted] = useState<TaskNotification[]>([]);
+  const [recentCompleted, setRecentCompleted] = useState<TaskNotification[]>(
+    []
+  );
   const [recentPending, setRecentPending] = useState<TaskNotification[]>([]);
   const [notifLoading, setNotifLoading] = useState(true);
 
@@ -51,6 +65,9 @@ const EmployeeDashboard = () => {
   const [inProgressCount, setInProgressCount] = useState(0);
   const [completedCount, setCompletedCount] = useState(0);
   const [dueTodayCount, setDueTodayCount] = useState(0);
+
+  const [todayGoals, setTodayGoals] = useState<EmployeeGoal[]>([]);
+  const [goalLoading, setGoalLoading] = useState(true);
 
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -66,13 +83,14 @@ const EmployeeDashboard = () => {
 
     fetchDashboardData();
     loadTasksAndNotifications();
+    loadTodayGoals();
   }, [navigate]);
 
   const fetchDashboardData = async () => {
     try {
       const data = await dashboardApi.getEmployeeStats();
       setStats(data.data);
-    } catch (error) {
+    } catch {
       toast({
         title: "Error",
         description: "Failed to load dashboard data",
@@ -156,6 +174,36 @@ const EmployeeDashboard = () => {
     }
   };
 
+  const loadTodayGoals = async () => {
+    try {
+      setGoalLoading(true);
+      const res = await goalsApi.getToday();
+      const data = (res as any).data || res;
+      const goals: EmployeeGoal[] = data.goals || data.goal || [];
+      goals.sort(
+        (a, b) => (a.priority ?? 999) - (b.priority ?? 999)
+      );
+      setTodayGoals(goals);
+    } catch {
+      setTodayGoals([]);
+    } finally {
+      setGoalLoading(false);
+    }
+  };
+
+  const handleCompleteGoal = async (id: string) => {
+    try {
+      await goalsApi.complete(id);
+      setTodayGoals((prev) => prev.filter((g) => g._id !== id));
+    } catch {
+      toast({
+        title: "Error",
+        description: "Failed to complete goal.",
+        variant: "destructive",
+      });
+    }
+  };
+
   const openTask = (id: string) => {
     navigate(`/tasks/${id}`);
   };
@@ -217,11 +265,8 @@ const EmployeeDashboard = () => {
           </button>
         </div>
 
-        {/* Large horizontal goal card directly under header */}
-        <Card
-          className="mb-8 border-border/50 shadow-elegant hover:shadow-glow transition-shadow cursor-pointer"
-          onClick={() => navigate("/goals/set")}
-        >
+        {/* Today's goals card */}
+        <Card className="mb-8 border-border/50 shadow-elegant">
           <CardContent className="py-6 px-6 flex items-center justify-between gap-4">
             <div className="flex items-start gap-4">
               <div className="mt-1 h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
@@ -231,15 +276,51 @@ const EmployeeDashboard = () => {
                 <div className="text-base font-semibold text-foreground">
                   Today&apos;s goal
                 </div>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Focus on your most important tasks and complete them within
-                  your working hours to avoid overdue items.
-                </p>
+                {goalLoading ? (
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Loading your goals...
+                  </p>
+                ) : todayGoals.length === 0 ? (
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Focus on your most important tasks and complete them within
+                    your working hours to avoid overdue items.
+                  </p>
+                ) : (
+                  <ul className="mt-2 space-y-1">
+                    {todayGoals.map((g) => (
+                      <li
+                        key={g._id}
+                        className="flex items-center justify-between text-sm text-foreground"
+                      >
+                        <span>
+                          {g.title}
+                          {g.priority !== undefined && (
+                            <span className="ml-2 text-xs text-muted-foreground">
+                              (Priority {g.priority})
+                            </span>
+                          )}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => handleCompleteGoal(g._id)}
+                          className="inline-flex items-center gap-1 rounded-full border border-emerald-500/70 bg-emerald-500/5 px-3 py-0.5 text-[11px] font-medium text-emerald-300 hover:bg-emerald-500/15 hover:border-emerald-400 transition-colors"
+                        >
+                          <CheckCircle2 className="h-3 w-3" />
+                          Done
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </div>
-            <span className="hidden md:inline text-xs text-primary underline">
-              Tap to view / update &rarr;
-            </span>
+            <button
+              type="button"
+              onClick={() => navigate("/goals/completed")}
+              className="text-xs text-primary underline"
+            >
+              Completed goals →
+            </button>
           </CardContent>
         </Card>
 
@@ -247,7 +328,9 @@ const EmployeeDashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card className="border-border/50 shadow-elegant hover:shadow-glow transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Points</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Total Points
+              </CardTitle>
               <TrendingUp className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
@@ -285,7 +368,7 @@ const EmployeeDashboard = () => {
                 }}
                 style={{ background: "none", border: "none", cursor: "pointer" }}
               >
-                View assigned tasks &rarr;
+                View assigned tasks →
               </button>
             </CardContent>
           </Card>
@@ -299,7 +382,9 @@ const EmployeeDashboard = () => {
               <div className="text-3xl font-bold text-foreground">
                 {stats?.completedTasks || 0}
               </div>
-              <p className="text-xs text-muted-foreground mt-1">Tasks finished</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Tasks finished
+              </p>
             </CardContent>
           </Card>
 
@@ -340,7 +425,9 @@ const EmployeeDashboard = () => {
 
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm font-medium">This week&apos;s goal</span>
+                  <span className="text-sm font-medium">
+                    This week&apos;s goal
+                  </span>
                   <span className="text-sm text-muted-foreground">
                     {weeklyPoints}/{WEEKLY_TARGET_POINTS}
                   </span>
@@ -424,20 +511,23 @@ const EmployeeDashboard = () => {
                 <p className="text-sm text-muted-foreground">
                   Loading notifications...
                 </p>
-              ) : recentCompleted.length === 0 && recentPending.length === 0 ? (
+              ) : recentCompleted.length === 0 &&
+                recentPending.length === 0 ? (
                 <p className="text-sm text-muted-foreground">
                   No notifications right now.
                 </p>
               ) : (
                 <div className="space-y-3 max-h-72 overflow-y-auto pr-1">
-                  {[...recentCompleted.map((t) => ({
-                    t,
-                    type: "completed" as const,
-                  })),
-                  ...recentPending.map((t) => ({
-                    t,
-                    type: "pending" as const,
-                  }))].map(({ t, type }) => (
+                  {[
+                    ...recentCompleted.map((t) => ({
+                      t,
+                      type: "completed" as const,
+                    })),
+                    ...recentPending.map((t) => ({
+                      t,
+                      type: "pending" as const,
+                    })),
+                  ].map(({ t, type }) => (
                     <button
                       key={t._id}
                       type="button"
@@ -450,7 +540,9 @@ const EmployeeDashboard = () => {
                       <div className="flex-1">
                         <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
                           <span>
-                            {type === "completed" ? "Task completed" : "Pending task"}
+                            {type === "completed"
+                              ? "Task completed"
+                              : "Pending task"}
                           </span>
                           <span>now</span>
                         </div>
@@ -461,9 +553,9 @@ const EmployeeDashboard = () => {
                           {type === "completed"
                             ? "Great job! This task is finished."
                             : t.dueDate
-                            ? `Due ${new Date(t.dueDate).toLocaleDateString(
-                                "en-IN"
-                              )}`
+                            ? `Due ${new Date(
+                                t.dueDate
+                              ).toLocaleDateString("en-IN")}`
                             : "No due date set."}
                         </div>
                       </div>

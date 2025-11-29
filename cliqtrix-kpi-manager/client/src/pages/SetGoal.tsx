@@ -13,6 +13,9 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import api from "@/lib/api";
+
+const { goalsApi } = api as any;
 
 const SetGoal = () => {
   const [title, setTitle] = useState("");
@@ -20,6 +23,9 @@ const SetGoal = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [targetPoints, setTargetPoints] = useState<number | "">("");
+  const [priority, setPriority] = useState<number | "">("");
+  const [saving, setSaving] = useState(false);
+
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -35,14 +41,32 @@ const SetGoal = () => {
       return;
     }
 
-    // TODO: Call your backend /goals API here
-    // await goalsApi.set({ title, description, startDate, endDate, targetPoints });
+    try {
+      setSaving(true);
+      await goalsApi.create({
+        title,
+        description: description || undefined,
+        startDate,
+        endDate,
+        targetPoints:
+          targetPoints === "" ? undefined : Number(targetPoints),
+        priority: priority === "" ? undefined : Number(priority),
+      });
 
-    toast({
-      title: "Goal set",
-      description: "Your goal has been saved.",
-    });
-    navigate("/dashboard/employee");
+      toast({
+        title: "Goal set",
+        description: "Your goal has been saved.",
+      });
+      navigate("/dashboard/employee");
+    } catch (err) {
+      toast({
+        title: "Error",
+        description: "Failed to save goal.",
+        variant: "destructive",
+      });
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -115,15 +139,37 @@ const SetGoal = () => {
                 />
               </div>
 
+              <div className="space-y-1.5">
+                <Label htmlFor="priority">
+                  Priority (1 = highest, 5 = lowest, optional)
+                </Label>
+                <Input
+                  id="priority"
+                  type="number"
+                  min={1}
+                  max={5}
+                  value={priority}
+                  onChange={(e) =>
+                    setPriority(
+                      e.target.value === "" ? "" : Number(e.target.value)
+                    )
+                  }
+                  placeholder="e.g. 1"
+                />
+              </div>
+
               <div className="flex justify-end gap-2 pt-2">
                 <Button
                   type="button"
                   variant="outline"
                   onClick={() => navigate("/dashboard/employee")}
+                  disabled={saving}
                 >
                   Cancel
                 </Button>
-                <Button type="submit">Save goal</Button>
+                <Button type="submit" disabled={saving}>
+                  {saving ? "Saving..." : "Save goal"}
+                </Button>
               </div>
             </form>
           </CardContent>

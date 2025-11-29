@@ -20,6 +20,8 @@ import Leaderboard from "./pages/Leaderboard";
 import CreateTeam from "./pages/CreateTeam";
 import ManageTeams from "./pages/ManageTeams";
 import SetGoal from "@/pages/SetGoal";
+import CompanyProgress from "@/pages/CompanyProgress";
+import CompletedGoals from "@/pages/CompletedGoals";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +48,8 @@ const App = () => (
           <Route path="/teams/create" element={<CreateTeam />} />
           <Route path="/teams" element={<ManageTeams />} />
           <Route path="/goals/set" element={<SetGoal />} />
+          <Route path="/admin/progress" element={<CompanyProgress />} />
+          <Route path="/goals/completed" element={<CompletedGoals />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -1445,3 +1445,343 @@
 2025-11-27 19:24:08 [[32minfo[39m]: [32mUser logged in: samkevin1623@gmail.com (employee)[39m
 2025-11-27 19:24:19 [[32minfo[39m]: [32mUser logged in: rsamruthhalakshmi@gmail.com (employee)[39m
 2025-11-27 19:30:49 [[32minfo[39m]: [32mUser logged in: rsamruthhalakshmi@gmail.com (employee)[39m
+2025-11-27 19:57:39 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-27 20:02:05 [[32minfo[39m]: [32mUser logged in: samkevin1623@gmail.com (employee)[39m
+2025-11-27 20:08:02 [[32minfo[39m]: [32mUser logged in: samkevin1623@gmail.com (employee)[39m
+2025-11-27 20:21:17 [[32minfo[39m]: [32mUser logged in: samkevin1623@gmail.com (employee)[39m
+2025-11-27 20:37:30 [[32minfo[39m]: [32mUser logged in: rsamruthhalakshmi@gmail.com (employee)[39m
+2025-11-27 20:38:27 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-27 20:38:27 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-27 20:38:27 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-27 20:38:27 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-02.1bdy5g3.mongodb.net[39m
+2025-11-27 20:38:27 [[32minfo[39m]: [32m============================================================[39m
+2025-11-27 20:38:27 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-27 20:38:27 [[32minfo[39m]: [32m============================================================[39m
+2025-11-27 20:38:27 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-27 20:38:27 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-27 20:38:27 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-27 20:38:27 [[32minfo[39m]: [32m============================================================[39m
+2025-11-27 20:53:08 [[33mwarn[39m]: [33mMongoose disconnected from MongoDB[39m
+2025-11-27 20:53:08 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-27 22:00:35 [[33mwarn[39m]: [33mMongoose disconnected from MongoDB[39m
+2025-11-27 22:00:35 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-27 22:29:23 [[33mwarn[39m]: [33mMongoose disconnected from MongoDB[39m
+2025-11-27 22:29:23 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-27 23:08:18 [[33mwarn[39m]: [33mMongoose disconnected from MongoDB[39m
+2025-11-27 23:08:28 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-28 06:25:31 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-28 06:25:31 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-28 06:25:31 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-28 06:25:31 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-01.1bdy5g3.mongodb.net[39m
+2025-11-28 06:25:31 [[32minfo[39m]: [32m============================================================[39m
+2025-11-28 06:25:31 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-28 06:25:31 [[32minfo[39m]: [32m============================================================[39m
+2025-11-28 06:25:31 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-28 06:25:31 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-28 06:25:31 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-28 06:25:31 [[32minfo[39m]: [32m============================================================[39m
+2025-11-28 06:26:35 [[32minfo[39m]: [32mUser logged in: rsamruthhalakshmi@gmail.com (employee)[39m
+2025-11-28 06:28:30 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-28 06:31:54 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-28 06:31:54 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-28 06:31:54 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-28 06:31:54 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-01.1bdy5g3.mongodb.net[39m
+2025-11-28 06:31:54 [[32minfo[39m]: [32m============================================================[39m
+2025-11-28 06:31:54 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-28 06:31:54 [[32minfo[39m]: [32m============================================================[39m
+2025-11-28 06:31:54 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-28 06:31:54 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-28 06:31:54 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-28 06:31:54 [[32minfo[39m]: [32m============================================================[39m
+2025-11-28 06:43:01 [[33mwarn[39m]: [33mMongoose disconnected from MongoDB[39m
+2025-11-28 06:43:11 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-28 09:30:35 [[33mwarn[39m]: [33mMongoose disconnected from MongoDB[39m
+2025-11-28 09:30:36 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-28 11:07:34 [[33mwarn[39m]: [33mMongoose disconnected from MongoDB[39m
+2025-11-28 11:07:34 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-28 11:26:29 [[33mwarn[39m]: [33mMongoose disconnected from MongoDB[39m
+2025-11-28 11:26:29 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-28 22:50:03 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-28 22:50:03 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-28 22:50:03 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-28 22:50:03 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-00.1bdy5g3.mongodb.net[39m
+2025-11-28 22:50:03 [[32minfo[39m]: [32m============================================================[39m
+2025-11-28 22:50:03 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-28 22:50:03 [[32minfo[39m]: [32m============================================================[39m
+2025-11-28 22:50:03 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-28 22:50:03 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-28 22:50:03 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-28 22:50:03 [[32minfo[39m]: [32m============================================================[39m
+2025-11-28 22:50:49 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-28 23:20:38 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-28 23:24:20 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-29 00:15:22 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-29 00:35:14 [[32minfo[39m]: [32mProject created: Sense-AI by rj8702@srmist.edu.in[39m
+2025-11-29 10:14:06 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 10:14:06 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 10:14:06 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 10:14:06 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-01.1bdy5g3.mongodb.net[39m
+2025-11-29 10:14:06 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:14:06 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 10:14:06 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:14:06 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 10:14:06 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 10:14:06 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 10:14:06 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:16:36 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-29 10:22:26 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-29 10:29:30 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 10:29:30 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 10:29:30 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 10:29:30 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-00.1bdy5g3.mongodb.net[39m
+2025-11-29 10:29:30 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:29:30 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 10:29:30 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:29:30 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 10:29:30 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 10:29:30 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 10:29:30 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:29:46 [[33mwarn[39m]: [33mMongoose disconnected from MongoDB[39m
+2025-11-29 10:29:55 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 10:29:55 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 10:29:55 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 10:29:55 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-01.1bdy5g3.mongodb.net[39m
+2025-11-29 10:29:55 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:29:55 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 10:29:55 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:29:55 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 10:29:55 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 10:29:55 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 10:29:55 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:29:56 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-29 10:37:27 [[31merror[39m]: [31mGet project error: Cast to ObjectId failed for value "kpi-progress" (type string) at path "_id" for model "Project"[39m
+2025-11-29 10:37:27 [[31merror[39m]: [31mGet project error: Cast to ObjectId failed for value "kpi-progress" (type string) at path "_id" for model "Project"[39m
+2025-11-29 10:37:35 [[33mwarn[39m]: [33mMongoose disconnected from MongoDB[39m
+2025-11-29 10:37:42 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 10:37:42 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 10:37:42 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 10:37:42 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-00.1bdy5g3.mongodb.net[39m
+2025-11-29 10:37:42 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:37:42 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 10:37:42 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:37:42 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 10:37:42 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 10:37:42 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 10:37:42 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:37:45 [[31merror[39m]: [31mGet project error: Cast to ObjectId failed for value "kpi-progress" (type string) at path "_id" for model "Project"[39m
+2025-11-29 10:37:57 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-29 10:37:58 [[31merror[39m]: [31mGet project error: Cast to ObjectId failed for value "kpi-progress" (type string) at path "_id" for model "Project"[39m
+2025-11-29 10:41:44 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 10:41:44 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 10:41:44 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 10:41:44 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-01.1bdy5g3.mongodb.net[39m
+2025-11-29 10:41:44 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:41:44 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 10:41:44 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:41:44 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 10:41:44 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 10:41:44 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 10:41:44 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:41:44 [[33mwarn[39m]: [33mMongoose disconnected from MongoDB[39m
+2025-11-29 10:41:51 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 10:41:51 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 10:41:51 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 10:41:51 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-01.1bdy5g3.mongodb.net[39m
+2025-11-29 10:41:51 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:41:51 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 10:41:51 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:41:51 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 10:41:51 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 10:41:51 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 10:41:51 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:42:05 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-29 10:47:33 [[33mwarn[39m]: [33mMongoose disconnected from MongoDB[39m
+2025-11-29 10:47:41 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 10:47:41 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 10:47:41 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 10:47:41 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-00.1bdy5g3.mongodb.net[39m
+2025-11-29 10:47:41 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:47:41 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 10:47:41 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:47:41 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 10:47:41 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 10:47:41 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 10:47:41 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:57:11 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 10:57:11 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 10:57:11 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 10:57:11 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-01.1bdy5g3.mongodb.net[39m
+2025-11-29 10:57:11 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:57:11 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 10:57:11 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:57:11 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 10:57:11 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 10:57:11 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 10:57:11 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:57:26 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 10:57:26 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 10:57:26 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 10:57:26 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-00.1bdy5g3.mongodb.net[39m
+2025-11-29 10:57:26 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:57:26 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 10:57:26 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:57:26 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 10:57:26 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 10:57:26 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 10:57:26 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:57:31 [[33mwarn[39m]: [33mMongoose disconnected from MongoDB[39m
+2025-11-29 10:57:35 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 10:57:35 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 10:57:35 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 10:57:35 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-02.1bdy5g3.mongodb.net[39m
+2025-11-29 10:57:35 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:57:35 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 10:57:35 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:57:35 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 10:57:35 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 10:57:35 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 10:57:35 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 10:57:45 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-29 11:02:18 [[32minfo[39m]: [32mUser logged in: samkevin1623@gmail.com (employee)[39m
+2025-11-29 11:02:24 [[32minfo[39m]: [32mUser logged in: rsamruthhalakshmi@gmail.com (employee)[39m
+2025-11-29 11:02:49 [[32minfo[39m]: [32mTask updated: frontend architecture by rsamruthhalakshmi@gmail.com[39m
+2025-11-29 11:02:49 [[32minfo[39m]: [32mComment added to task: frontend architecture[39m
+2025-11-29 11:03:10 [[32minfo[39m]: [32mTask updated: Create Backend by rsamruthhalakshmi@gmail.com[39m
+2025-11-29 11:03:10 [[32minfo[39m]: [32mComment added to task: Create Backend[39m
+2025-11-29 11:03:14 [[32minfo[39m]: [32mTask updated: Create Backend by rsamruthhalakshmi@gmail.com[39m
+2025-11-29 11:03:14 [[32minfo[39m]: [32mComment added to task: Create Backend[39m
+2025-11-29 11:03:21 [[32minfo[39m]: [32mUser logged in: rsamruthhalakshmi@gmail.com (employee)[39m
+2025-11-29 11:04:48 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-29 11:16:11 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
+2025-11-29 11:58:36 [[32minfo[39m]: [32mUser logged in: rsamruthhalakshmi@gmail.com (employee)[39m
+2025-11-29 12:14:12 [[32minfo[39m]: [32mUser logged in: rsamruthhalakshmi@gmail.com (employee)[39m
+2025-11-29 12:30:38 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 12:30:38 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 12:30:38 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 12:30:38 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-02.1bdy5g3.mongodb.net[39m
+2025-11-29 12:30:38 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:30:38 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 12:30:38 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:30:38 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 12:30:38 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 12:30:38 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 12:30:38 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:30:42 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 12:30:42 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 12:30:42 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 12:30:42 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-00.1bdy5g3.mongodb.net[39m
+2025-11-29 12:30:42 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:30:42 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 12:30:42 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:30:42 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 12:30:42 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 12:30:42 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 12:30:42 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:30:53 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 12:30:53 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 12:30:53 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 12:30:53 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-01.1bdy5g3.mongodb.net[39m
+2025-11-29 12:30:53 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:30:53 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 12:30:53 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:30:53 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 12:30:53 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 12:30:53 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 12:30:53 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:30:57 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 12:30:57 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 12:30:57 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 12:30:57 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-00.1bdy5g3.mongodb.net[39m
+2025-11-29 12:30:57 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:30:57 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 12:30:57 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:30:57 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 12:30:57 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 12:30:57 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 12:30:57 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:31:15 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 12:31:15 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 12:31:15 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 12:31:15 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-01.1bdy5g3.mongodb.net[39m
+2025-11-29 12:31:15 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:31:15 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 12:31:15 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:31:15 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 12:31:15 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 12:31:15 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 12:31:15 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:31:21 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 12:31:21 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 12:31:21 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 12:31:21 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-01.1bdy5g3.mongodb.net[39m
+2025-11-29 12:31:21 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:31:21 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 12:31:21 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:31:21 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 12:31:21 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 12:31:21 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 12:31:21 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:36:49 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 12:36:49 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 12:36:49 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 12:36:49 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-00.1bdy5g3.mongodb.net[39m
+2025-11-29 12:36:49 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:36:49 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 12:36:49 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:36:49 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 12:36:49 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 12:36:49 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 12:36:49 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:37:23 [[33mwarn[39m]: [33mMongoose disconnected from MongoDB[39m
+2025-11-29 12:37:27 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 12:37:27 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 12:37:27 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 12:37:27 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-01.1bdy5g3.mongodb.net[39m
+2025-11-29 12:37:27 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:37:27 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 12:37:27 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:37:27 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 12:37:27 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 12:37:27 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 12:37:27 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 12:37:34 [[32minfo[39m]: [32mUser logged in: rsamruthhalakshmi@gmail.com (employee)[39m
+2025-11-29 12:40:26 [[32minfo[39m]: [32mGoal created for user 692725215ab11b147331a62b: Complete the task[39m
+2025-11-29 13:03:14 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 13:03:14 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 13:03:14 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 13:03:14 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-02.1bdy5g3.mongodb.net[39m
+2025-11-29 13:03:14 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 13:03:14 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 13:03:14 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 13:03:14 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 13:03:14 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 13:03:14 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 13:03:14 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 13:03:24 [[32minfo[39m]: [32mUser logged in: rsamruthhalakshmi@gmail.com (employee)[39m
+2025-11-29 13:03:36 [[32minfo[39m]: [32mGoal completed: Complete the task by user 692725215ab11b147331a62b[39m
+2025-11-29 13:18:44 [[33mwarn[39m]: [33mMongoose disconnected from MongoDB[39m
+2025-11-29 13:18:51 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 13:31:04 [[32minfo[39m]: [32mUser logged in: rsamruthhalakshmi@gmail.com (employee)[39m
+2025-11-29 13:42:37 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 13:42:37 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 13:42:37 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 13:42:37 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-00.1bdy5g3.mongodb.net[39m
+2025-11-29 13:42:37 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 13:42:37 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 13:42:37 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 13:42:37 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 13:42:37 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 13:42:37 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 13:42:37 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 13:42:51 [[32minfo[39m]: [32mMongoose connected to MongoDB[39m
+2025-11-29 13:42:51 [[32minfo[39m]: [32m✅ MongoDB connected successfully[39m
+2025-11-29 13:42:51 [[32minfo[39m]: [32m📊 Database: cliqtrix-kpi[39m
+2025-11-29 13:42:51 [[32minfo[39m]: [32m🌍 Host: ac-yprc9ac-shard-00-01.1bdy5g3.mongodb.net[39m
+2025-11-29 13:42:51 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 13:42:51 [[32minfo[39m]: [32m🚀 Cliqtrix KPI Manager Server Started[39m
+2025-11-29 13:42:51 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 13:42:51 [[32minfo[39m]: [32m📍 Server: http://localhost:5000[39m
+2025-11-29 13:42:51 [[32minfo[39m]: [32m🌍 Environment: development[39m
+2025-11-29 13:42:51 [[32minfo[39m]: [32m📊 Database: connected[39m
+2025-11-29 13:42:51 [[32minfo[39m]: [32m============================================================[39m
+2025-11-29 13:48:53 [[32minfo[39m]: [32mUser logged in: rj8702@srmist.edu.in (admin)[39m
