@@ -20,6 +20,7 @@
   "author": "Cliqtrix Team",
   "license": "MIT",
   "dependencies": {
+    "@types/node": "^24.10.1",
     "axios": "^1.13.2",
     "bcryptjs": "^2.4.3",
     "compression": "^1.8.1",
@@ -43,7 +44,6 @@
     "@types/jest": "^29.5.13",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/morgan": "^1.9.10",
-    "@types/node": "^22.19.1",
     "@types/supertest": "^6.0.2",
     "@typescript-eslint/eslint-plugin": "^8.47.0",
     "@typescript-eslint/parser": "^8.47.0",
