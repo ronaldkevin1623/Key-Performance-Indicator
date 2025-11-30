@@ -1,0 +1,5 @@
+# Env files
+.env
+.env.*
+cliqtrix-kpi-manager/server/.env.development
+cliqtrix-kpi-manager/server/.env.production

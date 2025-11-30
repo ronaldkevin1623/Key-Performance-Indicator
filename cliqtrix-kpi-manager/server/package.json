@@ -5,7 +5,7 @@
   "main": "dist/server.js",
   "scripts": {
     "dev": "nodemon",
-    "build": "tsc --transpileOnly",
+    "build": "tsc",
     "start": "node dist/server.js",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write \"src/**/*.ts\"",
@@ -59,5 +59,8 @@
   "directories": {
     "test": "tests"
   },
-  "type": "commonjs"
+  "type": "commonjs",
+  "engines": {
+    "node": "20.x"
+  }
 }
