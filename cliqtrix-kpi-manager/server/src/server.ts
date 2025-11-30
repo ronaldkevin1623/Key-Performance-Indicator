@@ -24,6 +24,7 @@ import dashboardRoutes from "./routes/dashboard.routes";
 import teamRoutes from "./routes/team.routes";
 import goalRoutes from "./routes/goal.routes";
 import chatbotRoutes from "./routes/chatbot.routes";
+import cliqRoutes from "./routes/cliq.routes";
 
 // Load environment variables (switch file by NODE_ENV)
 const envFile =
@@ -89,7 +90,7 @@ app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/teams", teamRoutes);
 app.use("/api/goals", goalRoutes);
 app.use("/api/chatbot", chatbotRoutes);
-
+app.use("/api/cliq", cliqRoutes);
 // ============================================
 // TEST ROUTES
 // ============================================
