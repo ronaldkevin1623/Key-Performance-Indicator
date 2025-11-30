@@ -1,4 +1,8 @@
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const API_URL = import.meta.env.VITE_API_URL;
+
+if (!API_URL) {
+  console.error("VITE_API_URL is not set. Please define it in your env file.");
+}
 
 const getAuthToken = (): string | null => {
   return localStorage.getItem("token");
